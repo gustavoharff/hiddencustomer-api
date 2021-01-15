@@ -31,7 +31,7 @@
     "babel-plugin-transform-typescript-metadata": "0.3.1",
     "commitizen": "4.2.2",
     "cz-conventional-changelog": "3.3.0",
-    "eslint": "7.17.0",
+    "eslint": "7.18.0",
     "eslint-config-airbnb-base": "14.2.1",
     "eslint-config-prettier": "7.1.0",
     "eslint-import-resolver-typescript": "2.3.0",
