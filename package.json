@@ -5,13 +5,22 @@
   "license": "MIT",
   "scripts": {
     "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files",
-    "start": "tsnd --inspect --transpile-only --ignore-watch node_modules src/shared/infra/http/server.ts"
+    "start": "tsnd --inspect --transpile-only --ignore-watch node_modules src/shared/infra/http/server.ts",
+    "typeorm": "tsnd ./node_modules/typeorm/cli.js"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "celebrate": "^13.0.4",
+    "class-transformer": "^0.3.2",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
-    "reflect-metadata": "^0.1.13"
+    "jsonwebtoken": "^8.5.1",
+    "pg": "^8.5.1",
+    "reflect-metadata": "^0.1.13",
+    "tsyringe": "^4.4.0",
+    "typeorm": "^0.2.30",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@babel/cli": "7.12.10",
@@ -25,6 +34,8 @@
     "@commitlint/config-conventional": "11.0.0",
     "@types/cors": "2.8.9",
     "@types/express": "4.17.11",
+    "@types/jsonwebtoken": "^8.5.0",
+    "@types/uuid": "^8.3.0",
     "@typescript-eslint/eslint-plugin": "4.13.0",
     "@typescript-eslint/parser": "4.13.0",
     "babel-plugin-module-resolver": "4.1.0",
