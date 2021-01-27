@@ -6,7 +6,9 @@
   "scripts": {
     "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files",
     "start": "tsnd --inspect --transpile-only --ignore-watch node_modules src/shared/infra/http/server.ts",
-    "typeorm": "tsnd ./node_modules/typeorm/cli.js"
+    "typeorm": "tsnd ./node_modules/typeorm/cli.js",
+    "lint": "eslint --ext .tsx,.ts,.js src/",
+    "tsc": "tsc --noEmit"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -32,6 +34,7 @@
     "@babel/preset-typescript": "7.12.7",
     "@commitlint/cli": "11.0.0",
     "@commitlint/config-conventional": "11.0.0",
+    "@types/bcryptjs": "^2.4.2",
     "@types/cors": "2.8.9",
     "@types/express": "4.17.11",
     "@types/jsonwebtoken": "8.5.0",
