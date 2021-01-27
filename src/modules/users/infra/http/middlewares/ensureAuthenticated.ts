@@ -11,6 +11,13 @@ interface ITokenPayload {
   sub: string;
 }
 
+interface ISubjectParsed {
+  user: {
+    id: string;
+    permission_id: string | null;
+  };
+}
+
 export default function ensureAuthenticated(
   request: Request,
   response: Response,
@@ -29,8 +36,11 @@ export default function ensureAuthenticated(
 
     const { sub } = decoded as ITokenPayload;
 
+    const subject: ISubjectParsed = JSON.parse(sub);
+
     request.user = {
-      id: sub,
+      id: subject.user.id,
+      permission_id: subject.user.permission_id,
     };
 
     return next();
