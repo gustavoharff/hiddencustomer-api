@@ -23,6 +23,9 @@ class User {
   @Exclude()
   password: string;
 
+  @Column()
+  permission: 'admin' | 'client' | 'user';
+
   @CreateDateColumn()
   created_at: Date;
 

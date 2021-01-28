@@ -49,7 +49,7 @@ class AuthenticateUserService {
     const subject = JSON.stringify({
       user: {
         id: user.id,
-        // permission_id: user.permission_id,
+        permission: user.permission,
       },
     });
 

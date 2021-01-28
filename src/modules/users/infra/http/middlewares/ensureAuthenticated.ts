@@ -14,7 +14,7 @@ interface ITokenPayload {
 interface ISubjectParsed {
   user: {
     id: string;
-    permission_id: string | null;
+    permission: 'admin' | 'client' | 'user';
   };
 }
 
@@ -40,7 +40,7 @@ export default function ensureAuthenticated(
 
     request.user = {
       id: subject.user.id,
-      permission_id: subject.user.permission_id,
+      permission: subject.user.permission,
     };
 
     return next();
