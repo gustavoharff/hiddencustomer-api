@@ -8,10 +8,11 @@ import UpdateCompanyService from '@modules/companies/services/UpdateCompanyServi
 class CompaniesController {
   public async create(request: Request, response: Response): Promise<Response> {
     const { name } = request.body;
+    const { permission_id } = request.user;
 
     const createCompany = container.resolve(CreateCompanyService);
 
-    const company = await createCompany.execute(name);
+    const company = await createCompany.execute({ name, permission_id });
 
     return response.json(classToClass(company));
   }
