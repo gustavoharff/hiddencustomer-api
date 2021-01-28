@@ -20,4 +20,17 @@ companiesRouter.post(
   companiesController.create,
 );
 
+companiesRouter.put(
+  '/:id',
+  celebrate({
+    [Segments.BODY]: {
+      name: Joi.string().required(),
+    },
+    [Segments.PARAMS]: {
+      id: Joi.string().uuid().required(),
+    },
+  }),
+  companiesController.update,
+);
+
 export default companiesRouter;
