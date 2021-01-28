@@ -11,7 +11,7 @@ const routes = Router();
 routes.use('/companies', companiesRouter);
 
 routes.use('/users', usersRouter);
-routes.use('/profile', profileRouter);
+routes.use('/me', profileRouter);
 routes.use('/auth', sessionsRouter);
 
 export default routes;
