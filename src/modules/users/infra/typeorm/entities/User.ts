@@ -4,9 +4,12 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   PrimaryGeneratedColumn,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
-
 import { Exclude } from 'class-transformer';
+
+import Company from '@modules/companies/infra/typeorm/entities/Company';
 
 @Entity('users')
 class User {
@@ -25,6 +28,16 @@ class User {
 
   @Column()
   permission: 'admin' | 'client' | 'user';
+
+  @Column()
+  company_id: string;
+
+  @ManyToOne(() => Company, {
+    onDelete: 'SET NULL',
+    onUpdate: 'CASCADE',
+  })
+  @JoinColumn({ name: 'company_id' })
+  company: Company;
 
   @CreateDateColumn()
   created_at: Date;

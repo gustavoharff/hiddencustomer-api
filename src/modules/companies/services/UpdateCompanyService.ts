@@ -4,9 +4,13 @@ import ICompaniesRepository from '@modules/companies/repositories/ICompaniesRepo
 
 import Company from '@modules/companies/infra/typeorm/entities/Company';
 
-import IUpdateCompanyDTO from '@modules/companies/dtos/IUpdateCompanyDTO';
-
 import AppError from '@shared/errors/AppError';
+
+interface IRequest {
+  id: string;
+  name: string;
+  permission: 'admin' | 'client' | 'user';
+}
 
 @injectable()
 class CreateCompanyService {
@@ -15,7 +19,14 @@ class CreateCompanyService {
     private companiesRepository: ICompaniesRepository,
   ) {}
 
-  public async execute({ id, name }: IUpdateCompanyDTO): Promise<Company> {
+  public async execute({ id, name, permission }: IRequest): Promise<Company> {
+    if (permission !== 'admin') {
+      throw new AppError(
+        "You don't have permission to execute this action.",
+        401,
+      );
+    }
+
     const company = await this.companiesRepository.findById(id);
 
     if (!company) {

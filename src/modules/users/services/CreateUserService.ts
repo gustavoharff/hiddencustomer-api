@@ -11,6 +11,7 @@ interface IRequest {
   name: string;
   email: string;
   password: string;
+  company_id: string;
   permission: 'admin' | 'client' | 'user';
 }
 
@@ -28,6 +29,7 @@ class CreateUserService {
     name,
     email,
     password,
+    company_id,
     permission,
   }: IRequest): Promise<User> {
     if (permission !== 'admin') {
@@ -49,6 +51,7 @@ class CreateUserService {
       name,
       email,
       password: hashedPassword,
+      company_id,
     });
 
     return user;

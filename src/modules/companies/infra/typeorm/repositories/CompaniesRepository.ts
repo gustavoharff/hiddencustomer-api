@@ -1,5 +1,4 @@
 import { getRepository, Repository } from 'typeorm';
-import { v4 } from 'uuid';
 
 import ICompaniesRepository from '@modules/companies/repositories/ICompaniesRepository';
 
@@ -14,7 +13,6 @@ class CompaniesRepository implements ICompaniesRepository {
 
   public async create(name: string): Promise<Company> {
     const company = this.ormRepository.create({
-      id: v4(),
       name,
     });
 
