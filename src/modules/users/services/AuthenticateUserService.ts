@@ -50,6 +50,7 @@ class AuthenticateUserService {
       user: {
         id: user.id,
         permission: user.permission,
+        company_id: user.company_id,
       },
     });
 

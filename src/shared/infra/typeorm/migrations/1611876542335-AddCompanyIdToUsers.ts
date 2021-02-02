@@ -24,7 +24,7 @@ export default class AddCompanyIdToUsers1611876542335
         columnNames: ['company_id'],
         referencedColumnNames: ['id'],
         referencedTableName: 'companies',
-        onDelete: 'CASCADE',
+        onDelete: 'SET NULL',
         onUpdate: 'CASCADE',
       }),
     );

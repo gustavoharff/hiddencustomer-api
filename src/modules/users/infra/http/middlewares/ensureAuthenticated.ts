@@ -15,6 +15,7 @@ interface ISubjectParsed {
   user: {
     id: string;
     permission: 'admin' | 'client' | 'user';
+    company_id: string | null;
   };
 }
 
@@ -41,6 +42,7 @@ export default function ensureAuthenticated(
     request.user = {
       id: subject.user.id,
       permission: subject.user.permission,
+      company_id: subject.user.company_id,
     };
 
     return next();
