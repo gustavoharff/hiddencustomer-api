@@ -5,7 +5,7 @@ declare namespace Express {
     user: {
       id: string;
       permission: 'admin' | 'client' | 'user';
-      company_id: string | null;
+      company_id: string;
     };
   }
 }

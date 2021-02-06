@@ -12,7 +12,6 @@ interface IRequest {
   email: string;
   password: string;
   company_id: string;
-  permission: 'admin' | 'client' | 'user';
 }
 
 @injectable()
@@ -30,15 +29,7 @@ class CreateUserService {
     email,
     password,
     company_id,
-    permission,
   }: IRequest): Promise<User> {
-    if (permission !== 'admin') {
-      throw new AppError(
-        "You don't have permission to execute this action.",
-        401,
-      );
-    }
-
     const checkUserExists = await this.usersRepository.findByEmail(email);
 
     if (checkUserExists) {

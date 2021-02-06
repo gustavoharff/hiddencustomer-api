@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
 import { verify } from 'jsonwebtoken';
 
-import AppError from '../../../../../shared/errors/AppError';
+import AppError from '@shared/errors/AppError';
 
-import authConfig from '../../../../../config/auth';
+import authConfig from '@config/auth';
 
 interface ITokenPayload {
   iat: number;
@@ -15,7 +15,7 @@ interface ISubjectParsed {
   user: {
     id: string;
     permission: 'admin' | 'client' | 'user';
-    company_id: string | null;
+    company_id: string;
   };
 }
 

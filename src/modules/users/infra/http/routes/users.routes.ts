@@ -3,6 +3,7 @@ import { celebrate, Joi, Segments } from 'celebrate';
 
 import UsersController from '../controllers/UsersController';
 import ensureAuthenticated from '../middlewares/ensureAuthenticated';
+import ensureAdministrator from '../middlewares/ensureAdministrator';
 
 const usersRouter = Router();
 
@@ -12,6 +13,7 @@ usersRouter.use(ensureAuthenticated);
 
 usersRouter.post(
   '/',
+  ensureAdministrator,
   celebrate({
     [Segments.BODY]: {
       name: Joi.string().required(),

@@ -2,9 +2,9 @@ import { Router } from 'express';
 
 import companiesRouter from '@modules/companies/infra/http/routes/companies.routes';
 
-import usersRouter from '../../../../modules/users/infra/http/routes/users.routes';
-import profileRouter from '../../../../modules/users/infra/http/routes/profile.routes';
-import sessionsRouter from '../../../../modules/users/infra/http/routes/auth.routes';
+import usersRouter from '@modules/users/infra/http/routes/users.routes';
+import profileRouter from '@modules/users/infra/http/routes/profile.routes';
+import sessionsRouter from '@modules/users/infra/http/routes/auth.routes';
 
 const routes = Router();
 

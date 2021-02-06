@@ -9,7 +9,6 @@ import AppError from '@shared/errors/AppError';
 interface IRequest {
   id: string;
   name: string;
-  permission: 'admin' | 'client' | 'user';
 }
 
 @injectable()
@@ -19,14 +18,7 @@ class CreateCompanyService {
     private companiesRepository: ICompaniesRepository,
   ) {}
 
-  public async execute({ id, name, permission }: IRequest): Promise<Company> {
-    if (permission !== 'admin') {
-      throw new AppError(
-        "You don't have permission to execute this action.",
-        401,
-      );
-    }
-
+  public async execute({ id, name }: IRequest): Promise<Company> {
     const company = await this.companiesRepository.findById(id);
 
     if (!company) {
