@@ -33,7 +33,10 @@ class CustomersRepository implements ICustomersRepository {
   }
 
   public async findByCompany(company_id: string): Promise<Customer[]> {
-    const customers = await this.ormRepository.find({ where: { company_id } });
+    const customers = await this.ormRepository.find({
+      where: { company_id },
+      order: { name: 'ASC' },
+    });
 
     return customers;
   }
