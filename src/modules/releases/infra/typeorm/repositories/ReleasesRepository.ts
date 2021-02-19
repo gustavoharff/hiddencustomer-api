@@ -29,6 +29,14 @@ class ReleasesRepository implements IReleasesRepository {
     return release;
   }
 
+  public async save(release: Release): Promise<Release> {
+    return this.ormRepository.save(release);
+  }
+
+  public async delete(id: string): Promise<void> {
+    await this.ormRepository.delete(id);
+  }
+
   public async findById(id: string): Promise<Release | undefined> {
     const release = await this.ormRepository.findOne(id);
 
@@ -51,10 +59,6 @@ class ReleasesRepository implements IReleasesRepository {
     });
 
     return releases;
-  }
-
-  public async save(release: Release): Promise<Release> {
-    return this.ormRepository.save(release);
   }
 }
 

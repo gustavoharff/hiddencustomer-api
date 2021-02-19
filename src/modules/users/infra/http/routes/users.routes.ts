@@ -11,6 +11,8 @@ const usersController = new UsersController();
 
 usersRouter.use(ensureAuthenticated);
 
+usersRouter.get('/', ensureAdministrator, usersController.index);
+
 usersRouter.post(
   '/',
   ensureAdministrator,

@@ -4,6 +4,7 @@ import { classToClass } from 'class-transformer';
 
 import CreateReleaseService from '@modules/releases/services/CreateReleaseService';
 import ListCompanyReleses from '@modules/releases/services/ListCompanyReleses';
+import { DeleteReleaseService } from '@modules/releases/services/DeleteReleaseService';
 
 class ReleasesController {
   public async index(request: Request, response: Response): Promise<Response> {
@@ -31,6 +32,16 @@ class ReleasesController {
     });
 
     return response.json(classToClass(release));
+  }
+
+  public async delete(request: Request, response: Response): Promise<Response> {
+    const { id } = request.params;
+
+    const deleteRelease = container.resolve(DeleteReleaseService);
+
+    await deleteRelease.execute({ id });
+
+    return response.send();
   }
 }
 

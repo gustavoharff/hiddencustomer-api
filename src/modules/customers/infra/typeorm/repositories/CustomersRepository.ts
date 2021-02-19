@@ -26,6 +26,14 @@ class CustomersRepository implements ICustomersRepository {
     return customer;
   }
 
+  public async save(customer: Customer): Promise<Customer> {
+    return this.ormRepository.save(customer);
+  }
+
+  public async delete(id: string): Promise<void> {
+    await this.ormRepository.delete(id);
+  }
+
   public async findById(id: string): Promise<Customer | undefined> {
     const customer = await this.ormRepository.findOne(id);
 
@@ -39,10 +47,6 @@ class CustomersRepository implements ICustomersRepository {
     });
 
     return customers;
-  }
-
-  public async save(customer: Customer): Promise<Customer> {
-    return this.ormRepository.save(customer);
   }
 }
 
