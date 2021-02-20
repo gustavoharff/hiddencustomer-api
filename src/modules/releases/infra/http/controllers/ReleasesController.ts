@@ -3,14 +3,14 @@ import { container } from 'tsyringe';
 import { classToClass } from 'class-transformer';
 
 import CreateReleaseService from '@modules/releases/services/CreateReleaseService';
-import ListCompanyReleses from '@modules/releases/services/ListCompanyReleses';
+import { ListCompanyReleasesService } from '@modules/releases/services/ListCompanyRelesesService';
 import { DeleteReleaseService } from '@modules/releases/services/DeleteReleaseService';
 
 class ReleasesController {
   public async index(request: Request, response: Response): Promise<Response> {
     const { company_id } = request.user;
 
-    const listCompanyReleses = container.resolve(ListCompanyReleses);
+    const listCompanyReleses = container.resolve(ListCompanyReleasesService);
 
     const releases = await listCompanyReleses.execute({
       company_id,
