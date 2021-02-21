@@ -9,6 +9,7 @@ import customersRouter from '@modules/customers/infra/http/routes/customers.rout
 import { customerRouter } from '@modules/customers/infra/http/routes/customer.routes';
 import releasesRouter from '@modules/releases/infra/http/routes/releases.routes';
 import { releaseRouter } from '@modules/releases/infra/http/routes/release.routes';
+import { datesRouter } from '@modules/releases/infra/http/routes/dates.routes';
 
 const routes = Router();
 
@@ -21,5 +22,6 @@ routes.use('/customer', customerRouter);
 routes.use('/customers', customersRouter);
 routes.use('/releases', releasesRouter);
 routes.use('/release', releaseRouter);
+routes.use('/release/dates', datesRouter);
 
 export default routes;
