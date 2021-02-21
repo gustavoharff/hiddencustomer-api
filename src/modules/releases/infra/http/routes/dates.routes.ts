@@ -31,4 +31,14 @@ datesRouter.post(
   releaseDatesController.create,
 );
 
+datesRouter.delete(
+  '/:id',
+  celebrate({
+    [Segments.PARAMS]: {
+      id: Joi.string().uuid().required(),
+    },
+  }),
+  releaseDatesController.delete,
+);
+
 export { datesRouter };

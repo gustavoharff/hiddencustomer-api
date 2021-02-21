@@ -4,6 +4,7 @@ import { classToClass } from 'class-transformer';
 
 import { ListReleaseDatesService } from '@modules/releases/services/ListReleaseDatesService';
 import { CreateReleaseDateService } from '@modules/releases/services/CreateReleaseDateService';
+import { DeleteReleaseDateService } from '@modules/releases/services/DeleteReleaseDateService';
 
 class ReleaseDatesController {
   public async index(request: Request, response: Response): Promise<Response> {
@@ -29,6 +30,16 @@ class ReleaseDatesController {
     });
 
     return response.json(classToClass(releaseDate));
+  }
+
+  public async delete(request: Request, response: Response): Promise<Response> {
+    const { id } = request.params;
+
+    const deleteReleaseDate = container.resolve(DeleteReleaseDateService);
+
+    await deleteReleaseDate.execute({ id });
+
+    return response.send();
   }
 }
 
