@@ -10,6 +10,7 @@ import { customerRouter } from '@modules/customers/infra/http/routes/customer.ro
 import releasesRouter from '@modules/releases/infra/http/routes/releases.routes';
 import { releaseRouter } from '@modules/releases/infra/http/routes/release.routes';
 import { datesRouter } from '@modules/releases/infra/http/routes/dates.routes';
+import { groupsRouter } from '@modules/releases/infra/http/routes/groups.routes';
 
 const routes = Router();
 
@@ -23,5 +24,6 @@ routes.use('/customers', customersRouter);
 routes.use('/releases', releasesRouter);
 routes.use('/release', releaseRouter);
 routes.use('/release/dates', datesRouter);
+routes.use('/release/groups', groupsRouter);
 
 export default routes;

@@ -17,6 +17,9 @@ import ReleasesRepository from '@modules/releases/infra/typeorm/repositories/Rel
 import { IReleaseDatesRepository } from '@modules/releases/repositories/IReleaseDatesRepository';
 import { ReleaseDatesRepository } from '@modules/releases/infra/typeorm/repositories/ReleaseDatesRepository';
 
+import { IReleaseGroupsRepository } from '@modules/releases/repositories/IReleaseGroupsRepository';
+import { ReleaseGroupsRepository } from '@modules/releases/infra/typeorm/repositories/ReleaseGroupsRepository';
+
 container.registerSingleton<ICompaniesRepository>(
   'CompaniesRepository',
   CompaniesRepository,
@@ -40,4 +43,9 @@ container.registerSingleton<IReleasesRepository>(
 container.registerSingleton<IReleaseDatesRepository>(
   'ReleaseDatesRepository',
   ReleaseDatesRepository,
+);
+
+container.registerSingleton<IReleaseGroupsRepository>(
+  'ReleaseGroupsRepository',
+  ReleaseGroupsRepository,
 );
