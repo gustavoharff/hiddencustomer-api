@@ -30,6 +30,9 @@ class User {
   permission: 'admin' | 'client' | 'user';
 
   @Column()
+  active: boolean;
+
+  @Column()
   company_id: string;
 
   @ManyToOne(() => Company, {

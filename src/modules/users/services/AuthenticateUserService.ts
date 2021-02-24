@@ -44,6 +44,10 @@ class AuthenticateUserService {
       throw new AppError('Incorrect email/password combination.', 401);
     }
 
+    if (!user.active) {
+      throw new AppError('User without permission to access the system.', 402);
+    }
+
     const { secret, expiresIn } = authConfig.jwt;
 
     const subject = JSON.stringify({
