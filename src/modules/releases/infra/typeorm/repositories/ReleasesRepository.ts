@@ -56,6 +56,7 @@ class ReleasesRepository implements IReleasesRepository {
     const releases = await this.ormRepository.find({
       where: { company_id },
       order: { name: 'ASC' },
+      relations: ['customer'],
     });
 
     return releases;
