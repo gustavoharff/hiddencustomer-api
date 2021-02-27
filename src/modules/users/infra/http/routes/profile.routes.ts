@@ -10,7 +10,18 @@ const profileController = new ProfileController();
 profileRouter.use(ensureAuthenticated);
 
 profileRouter.put(
-  '/',
+  '/info',
+  celebrate({
+    [Segments.BODY]: {
+      email: Joi.string().email().required(),
+      name: Joi.string().required(),
+    },
+  }),
+  profileController.update,
+);
+
+profileRouter.put(
+  '/password',
   celebrate({
     [Segments.BODY]: {
       old_password: Joi.string(),

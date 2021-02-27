@@ -3,7 +3,8 @@ import { container } from 'tsyringe';
 import { classToClass } from 'class-transformer';
 
 import ShowProfileService from '../../../services/ShowProfileService';
-import UpdateProfileService from '../../../services/UpdateProfileService';
+import { UpdateUserPasswordService } from '../../../services/UpdateUserPasswordService';
+import { UpdateUserInfoService } from '../../../services/UpdateUserInforService';
 
 class ProfileController {
   public async index(request: Request, response: Response): Promise<Response> {
@@ -17,16 +18,24 @@ class ProfileController {
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
-    const { old_password, password } = request.body;
+    const { old_password, password, name, email } = request.body;
     const user_id = request.user.id;
 
-    const updateProfile = container.resolve(UpdateProfileService);
+    if (old_password && password) {
+      const updatePassword = container.resolve(UpdateUserPasswordService);
 
-    const user = await updateProfile.execute({
-      user_id,
-      old_password,
-      password,
-    });
+      const user = await updatePassword.execute({
+        user_id,
+        old_password,
+        password,
+      });
+
+      return response.json(classToClass(user));
+    }
+
+    const updateInfo = container.resolve(UpdateUserInfoService);
+
+    const user = await updateInfo.execute({ email, name, user_id });
 
     return response.json(classToClass(user));
   }
