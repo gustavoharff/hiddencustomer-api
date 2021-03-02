@@ -20,4 +20,17 @@ releaseRouter.get(
   releaseController.index,
 );
 
+releaseRouter.put(
+  '/:id',
+  celebrate({
+    [Segments.PARAMS]: {
+      id: Joi.string().uuid().required(),
+    },
+    [Segments.BODY]: {
+      annotations: Joi.string().empty(''),
+    },
+  }),
+  releaseController.update,
+);
+
 export { releaseRouter };
