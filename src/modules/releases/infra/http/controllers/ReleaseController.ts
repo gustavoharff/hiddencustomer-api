@@ -4,6 +4,7 @@ import { classToClass } from 'class-transformer';
 
 import { ListReleaseService } from '@modules/releases/services/ListReleaseService';
 import { UpdateReleaseAnnotationsService } from '@modules/releases/services/UpdateReleaseAnnotationsService';
+import { UpdateReleaseService } from '@modules/releases/services/UpdateReleaseService';
 
 class ReleaseController {
   public async index(request: Request, response: Response): Promise<Response> {
@@ -20,13 +21,26 @@ class ReleaseController {
 
   public async update(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
-    const { annotations } = request.body;
+    const { annotations, name, paid, customer_id } = request.body;
 
-    const updateRelease = container.resolve(UpdateReleaseAnnotationsService);
+    if (annotations) {
+      const updateRelease = container.resolve(UpdateReleaseAnnotationsService);
+
+      const release = await updateRelease.execute({
+        id,
+        annotations,
+      });
+
+      return response.json(classToClass(release));
+    }
+
+    const updateRelease = container.resolve(UpdateReleaseService);
 
     const release = await updateRelease.execute({
       id,
-      annotations,
+      customer_id,
+      paid,
+      name,
     });
 
     return response.json(classToClass(release));
