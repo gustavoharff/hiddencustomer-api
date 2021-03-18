@@ -27,6 +27,12 @@ class CompaniesRepository implements ICompaniesRepository {
     return company;
   }
 
+  public async findAll(): Promise<Company[]> {
+    const companies = await this.ormRepository.find();
+
+    return companies;
+  }
+
   public async save(company: Company): Promise<Company> {
     return this.ormRepository.save(company);
   }

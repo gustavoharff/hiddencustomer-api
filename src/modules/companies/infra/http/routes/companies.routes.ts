@@ -13,6 +13,8 @@ const userCompanyController = new UserCompanyController();
 
 companiesRouter.use(ensureAuthenticated);
 
+companiesRouter.get('/', ensureAdministrator, companiesController.index);
+
 companiesRouter.get('/me', userCompanyController.index);
 
 companiesRouter.post(
