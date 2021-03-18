@@ -3,6 +3,7 @@ import { container } from 'tsyringe';
 import { classToClass } from 'class-transformer';
 
 import CreateUserService from '@modules/users/services/CreateUserService';
+import { ChangeUserAccessService } from '@modules/users/services/ChangeUserAccessService';
 import { ListUsersService } from '@modules/users/services/ListUsersService';
 
 export default class UsersController {
@@ -24,6 +25,20 @@ export default class UsersController {
       email,
       password,
       company_id,
+    });
+
+    return response.json(classToClass(user));
+  }
+
+  public async update(request: Request, response: Response): Promise<Response> {
+    const { active } = request.body;
+    const { id } = request.params;
+
+    const changeUserAccess = container.resolve(ChangeUserAccessService);
+
+    const user = await changeUserAccess.execute({
+      active,
+      user_id: id,
     });
 
     return response.json(classToClass(user));

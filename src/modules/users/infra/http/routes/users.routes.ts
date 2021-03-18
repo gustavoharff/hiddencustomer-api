@@ -27,4 +27,15 @@ usersRouter.post(
   usersController.create,
 );
 
+usersRouter.put(
+  '/:id',
+  ensureAdministrator,
+  celebrate({
+    [Segments.BODY]: {
+      active: Joi.boolean().required(),
+    },
+  }),
+  usersController.update,
+);
+
 export default usersRouter;
