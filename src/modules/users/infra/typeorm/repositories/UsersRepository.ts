@@ -22,6 +22,7 @@ class UsersRepository implements IUsersRepository {
       name,
       email,
       password,
+      permission: 'user',
       active: true,
       company_id,
     });
