@@ -1,6 +1,7 @@
 import { injectable, inject } from 'tsyringe';
 
 import IReleasesRepository from '@modules/releases/repositories/IReleasesRepository';
+import ICustomersRepository from '@modules/customers/repositories/ICustomersRepository';
 
 import AppError from '@shared/errors/AppError';
 
@@ -18,6 +19,9 @@ class UpdateReleaseService {
   constructor(
     @inject('ReleasesRepository')
     private releasesRepository: IReleasesRepository,
+
+    @inject('CustomersRepository')
+    private customersRepository: ICustomersRepository,
   ) {}
 
   public async execute({
@@ -29,12 +33,20 @@ class UpdateReleaseService {
     const release = await this.releasesRepository.findById(id);
 
     if (!release) {
-      throw new AppError('Release  does not exist.');
+      throw new AppError('Release does not exist.');
     }
 
     release.name = name;
     release.paid = paid;
-    release.customer_id = customer_id;
+
+    if (release.customer_id !== customer_id) {
+      release.customer_id = customer_id;
+      const customer = await this.customersRepository.findById(customer_id);
+
+      if (customer) {
+        release.customer = customer;
+      }
+    }
 
     await this.releasesRepository.save(release);
 

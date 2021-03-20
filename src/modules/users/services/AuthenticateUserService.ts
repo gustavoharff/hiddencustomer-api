@@ -45,7 +45,7 @@ class AuthenticateUserService {
     }
 
     if (!user.active) {
-      throw new AppError('User without permission to access the system.', 402);
+      throw new AppError('User without permission to access the system.', 440);
     }
 
     const { secret, expiresIn } = authConfig.jwt;

@@ -26,6 +26,12 @@ class ReleasesRepository implements IReleasesRepository {
 
     await this.ormRepository.save(release);
 
+    const releaseWithRelation = await this.findById(release.id);
+
+    if (releaseWithRelation) {
+      return releaseWithRelation;
+    }
+
     return release;
   }
 
@@ -38,7 +44,9 @@ class ReleasesRepository implements IReleasesRepository {
   }
 
   public async findById(id: string): Promise<Release | undefined> {
-    const release = await this.ormRepository.findOne(id);
+    const release = await this.ormRepository.findOne(id, {
+      relations: ['customer'],
+    });
 
     return release;
   }
