@@ -12,6 +12,12 @@ interface IRequest {
   company_id: string;
 }
 
+interface IReleaseWithCounters extends Release {
+  interval: Date[];
+  dates_counter: number;
+  groups_counter: number;
+}
+
 @injectable()
 class CreateReleaseService {
   constructor(
@@ -26,7 +32,7 @@ class CreateReleaseService {
     name,
     customer_id,
     company_id,
-  }: IRequest): Promise<Release> {
+  }: IRequest): Promise<IReleaseWithCounters> {
     const customer = await this.customersRepository.findById(customer_id);
 
     if (!customer) {
@@ -39,7 +45,7 @@ class CreateReleaseService {
       company_id,
     });
 
-    return release;
+    return { ...release, dates_counter: 0, groups_counter: 0, interval: [] };
   }
 }
 

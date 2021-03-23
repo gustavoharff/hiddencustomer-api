@@ -5,9 +5,14 @@ import ICompaniesRepository from '@modules/companies/repositories/ICompaniesRepo
 
 import Customer from '@modules/customers/infra/typeorm/entities/Customer';
 import AppError from '@shared/errors/AppError';
+import IReleasesRepository from '@modules/releases/repositories/IReleasesRepository';
 
 interface IRequest {
   company_id: string;
+}
+
+interface ICustomerWithCounter extends Customer {
+  releases_counter: number;
 }
 
 @injectable()
@@ -18,9 +23,14 @@ class ListUserCustomersService {
 
     @inject('CustomersRepository')
     private customersRepository: ICustomersRepository,
+
+    @inject('ReleasesRepository')
+    private releasesRepository: IReleasesRepository,
   ) {}
 
-  public async execute({ company_id }: IRequest): Promise<Customer[]> {
+  public async execute({
+    company_id,
+  }: IRequest): Promise<ICustomerWithCounter[]> {
     const company = await this.companiesRepository.findById(company_id);
 
     if (!company) {
@@ -29,7 +39,20 @@ class ListUserCustomersService {
 
     const customers = await this.customersRepository.findByCompany(company_id);
 
-    return customers;
+    const customersWithCounter = await Promise.all(
+      customers.map(async customer => {
+        const releases = await this.releasesRepository.findByCustomer(
+          customer.id,
+        );
+
+        return {
+          ...customer,
+          releases_counter: releases.length,
+        };
+      }),
+    );
+
+    return customersWithCounter;
   }
 }
 

@@ -6,12 +6,20 @@ import ICustomersRepository from '@modules/customers/repositories/ICustomersRepo
 import AppError from '@shared/errors/AppError';
 
 import Release from '../infra/typeorm/entities/Release';
+import { IReleaseGroupsRepository } from '../repositories/IReleaseGroupsRepository';
+import { IReleaseDatesRepository } from '../repositories/IReleaseDatesRepository';
 
 interface IRequest {
   id: string;
   name: string;
   customer_id: string;
   paid: boolean;
+}
+
+interface IReleaseWithCounters extends Release {
+  interval: Date[];
+  dates_counter: number;
+  groups_counter: number;
 }
 
 @injectable()
@@ -22,6 +30,12 @@ class UpdateReleaseService {
 
     @inject('CustomersRepository')
     private customersRepository: ICustomersRepository,
+
+    @inject('ReleaseGroupsRepository')
+    private releaseGroupsRepository: IReleaseGroupsRepository,
+
+    @inject('ReleaseDatesRepository')
+    private releaseDatesRepository: IReleaseDatesRepository,
   ) {}
 
   public async execute({
@@ -29,7 +43,7 @@ class UpdateReleaseService {
     name,
     paid,
     customer_id,
-  }: IRequest): Promise<Release> {
+  }: IRequest): Promise<IReleaseWithCounters> {
     const release = await this.releasesRepository.findById(id);
 
     if (!release) {
@@ -50,7 +64,16 @@ class UpdateReleaseService {
 
     await this.releasesRepository.save(release);
 
-    return release;
+    const groups = await this.releaseGroupsRepository.findByRelease(release.id);
+
+    const dates = await this.releaseDatesRepository.findByRelease(release.id);
+
+    return {
+      ...release,
+      dates_counter: dates.length,
+      groups_counter: groups.length,
+      interval: [dates[dates.length - 1].date, dates[0].date],
+    };
   }
 }
 

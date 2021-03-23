@@ -12,9 +12,10 @@ interface IRequest {
   company_id: string;
 }
 
-interface IReleaseWithDates extends Release {
+interface IReleaseWithCounters extends Release {
   interval: Date[];
   dates_counter: number;
+  groups_counter: number;
 }
 
 @injectable()
@@ -33,7 +34,9 @@ class ListCompanyReleasesService {
     private companiesRepository: ICompaniesRepository,
   ) {}
 
-  public async execute({ company_id }: IRequest): Promise<IReleaseWithDates[]> {
+  public async execute({
+    company_id,
+  }: IRequest): Promise<IReleaseWithCounters[]> {
     const company = await this.companiesRepository.findById(company_id);
 
     if (!company) {

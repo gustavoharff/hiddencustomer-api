@@ -11,6 +11,10 @@ interface IRequest {
   company_id: string;
 }
 
+interface ICustomerWithCounter extends Customer {
+  releases_counter: number;
+}
+
 @injectable()
 class CreateCustomerService {
   constructor(
@@ -21,7 +25,10 @@ class CreateCustomerService {
     private customersRepository: ICustomersRepository,
   ) {}
 
-  public async execute({ name, company_id }: IRequest): Promise<Customer> {
+  public async execute({
+    name,
+    company_id,
+  }: IRequest): Promise<ICustomerWithCounter> {
     const company = await this.companiesRepository.findById(company_id);
 
     if (!company) {
@@ -33,7 +40,7 @@ class CreateCustomerService {
       company_id,
     });
 
-    return customer;
+    return { ...customer, releases_counter: 0 };
   }
 }
 
