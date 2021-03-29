@@ -20,4 +20,17 @@ customerRouter.get(
   customerController.index,
 );
 
+customerRouter.put(
+  '/:id',
+  celebrate({
+    [Segments.PARAMS]: {
+      id: Joi.string().uuid().required(),
+    },
+    [Segments.BODY]: {
+      name: Joi.string().required(),
+    },
+  }),
+  customerController.update,
+);
+
 export { customerRouter };
