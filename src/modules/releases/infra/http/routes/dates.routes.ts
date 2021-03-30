@@ -4,11 +4,15 @@ import { celebrate, Segments, Joi } from 'celebrate';
 import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated';
 
 import { ReleaseDatesController } from '@modules/releases/infra/http/controllers/ReleaseDatesController';
+import { CompanyReleaseDatesController } from '@modules/releases/infra/http/controllers/CompanyReleaseDatesController';
 
 const datesRouter = Router();
 const releaseDatesController = new ReleaseDatesController();
+const companyReleaseDatesController = new CompanyReleaseDatesController();
 
 datesRouter.use(ensureAuthenticated);
+
+datesRouter.get('/company', companyReleaseDatesController.index);
 
 datesRouter.get(
   '/:id',

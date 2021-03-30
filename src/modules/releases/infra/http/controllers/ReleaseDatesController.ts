@@ -21,12 +21,14 @@ class ReleaseDatesController {
 
   public async create(request: Request, response: Response): Promise<Response> {
     const { date, release_id } = request.body;
+    const { company_id } = request.user;
 
     const createReleaseDate = container.resolve(CreateReleaseDateService);
 
     const releaseDate = await createReleaseDate.execute({
       date,
       release_id,
+      company_id,
     });
 
     return response.json(classToClass(releaseDate));

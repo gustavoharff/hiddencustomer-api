@@ -9,6 +9,7 @@ import {
 } from 'typeorm';
 
 import Release from '@modules/releases/infra/typeorm/entities/Release';
+import Company from '@modules/companies/infra/typeorm/entities/Company';
 
 @Entity('release_dates')
 class ReleaseDate {
@@ -27,6 +28,16 @@ class ReleaseDate {
   })
   @JoinColumn({ name: 'release_id' })
   release: Release;
+
+  @Column()
+  company_id: string;
+
+  @ManyToOne(() => Company, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
+  @JoinColumn({ name: 'company_id' })
+  company: Company;
 
   @CreateDateColumn()
   created_at: Date;

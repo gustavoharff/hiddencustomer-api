@@ -8,6 +8,7 @@ import { ReleaseDate } from '../infra/typeorm/entities/ReleaseDate';
 
 interface IRequest {
   release_id: string;
+  company_id: string;
   date: string;
 }
 
@@ -21,7 +22,11 @@ class CreateReleaseDateService {
     private releaseDatesRepository: IReleaseDatesRepository,
   ) {}
 
-  public async execute({ release_id, date }: IRequest): Promise<ReleaseDate> {
+  public async execute({
+    release_id,
+    company_id,
+    date,
+  }: IRequest): Promise<ReleaseDate> {
     const release = await this.releasesRepository.findById(release_id);
 
     if (!release) {
@@ -31,6 +36,7 @@ class CreateReleaseDateService {
     const releaseDate = await this.releaseDatesRepository.create({
       date,
       release_id,
+      company_id,
     });
 
     return releaseDate;

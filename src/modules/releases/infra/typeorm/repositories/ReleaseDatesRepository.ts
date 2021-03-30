@@ -15,10 +15,12 @@ class ReleaseDatesRepository implements IReleaseDatesRepository {
   public async create({
     date,
     release_id,
+    company_id,
   }: ICreateReleaseDateDTO): Promise<ReleaseDate> {
     const releaseDate = this.ormRepository.create({
       date: new Date(date),
       release_id,
+      company_id,
     });
 
     await this.ormRepository.save(releaseDate);
@@ -43,6 +45,17 @@ class ReleaseDatesRepository implements IReleaseDatesRepository {
   public async findByRelease(release_id: string): Promise<ReleaseDate[]> {
     const releaseDates = await this.ormRepository.find({
       where: { release_id },
+      order: {
+        date: 'DESC',
+      },
+    });
+
+    return releaseDates;
+  }
+
+  public async findByCompany(company_id: string): Promise<ReleaseDate[]> {
+    const releaseDates = await this.ormRepository.find({
+      where: { company_id },
       order: {
         date: 'DESC',
       },

@@ -8,6 +8,7 @@ interface IReleaseDatesRepository {
   delete(id: string): Promise<void>;
   findById(id: string): Promise<ReleaseDate | undefined>;
   findByRelease(release_id: string): Promise<ReleaseDate[]>;
+  findByCompany(company_id: string): Promise<ReleaseDate[]>;
 }
 
 export { IReleaseDatesRepository };
