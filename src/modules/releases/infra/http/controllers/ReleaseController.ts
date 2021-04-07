@@ -23,7 +23,7 @@ class ReleaseController {
     const { id } = request.params;
     const { annotations, name, paid, customer_id } = request.body;
 
-    if (annotations) {
+    if (annotations || annotations === '') {
       const updateRelease = container.resolve(UpdateReleaseAnnotationsService);
 
       const release = await updateRelease.execute({
