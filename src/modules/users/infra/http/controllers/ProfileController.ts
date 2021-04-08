@@ -2,11 +2,11 @@ import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 import { classToClass } from 'class-transformer';
 
-import ShowProfileService from '../../../services/ShowProfileService';
-import { UpdateUserPasswordService } from '../../../services/UpdateUserPasswordService';
-import { UpdateUserInfoService } from '../../../services/UpdateUserInforService';
+import { ShowProfileService } from '@modules/users/services/ShowProfileService';
+import { UpdateUserPasswordService } from '@modules/users/services/UpdateUserPasswordService';
+import { UpdateUserInfoService } from '@modules/users/services/UpdateUserInforService';
 
-class ProfileController {
+export class ProfileController {
   public async index(request: Request, response: Response): Promise<Response> {
     const user_id = request.user.id;
 
@@ -40,5 +40,3 @@ class ProfileController {
     return response.json(classToClass(user));
   }
 }
-
-export default ProfileController;

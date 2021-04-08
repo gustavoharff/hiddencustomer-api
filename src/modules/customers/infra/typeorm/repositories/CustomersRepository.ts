@@ -1,11 +1,11 @@
 import { getRepository, Repository } from 'typeorm';
 
-import ICustomersRepository from '@modules/customers/repositories/ICustomersRepository';
+import { ICustomersRepository } from '@modules/customers/repositories/ICustomersRepository';
 
-import Customer from '@modules/customers/infra/typeorm/entities/Customer';
-import ICreateCustomerDTO from '@modules/customers/dtos/ICreateCustomerDTO';
+import { Customer } from '@modules/customers/infra/typeorm/entities/Customer';
+import { ICreateCustomerDTO } from '@modules/customers/dtos/ICreateCustomerDTO';
 
-class CustomersRepository implements ICustomersRepository {
+export class CustomersRepository implements ICustomersRepository {
   private ormRepository: Repository<Customer>;
 
   constructor() {
@@ -49,5 +49,3 @@ class CustomersRepository implements ICustomersRepository {
     return customers;
   }
 }
-
-export default CustomersRepository;

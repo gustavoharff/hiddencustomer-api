@@ -1,17 +1,17 @@
 import { injectable, inject } from 'tsyringe';
 
-import ICustomersRepository from '@modules/customers/repositories/ICustomersRepository';
+import { ICustomersRepository } from '@modules/customers/repositories/ICustomersRepository';
 
-import Customer from '@modules/customers/infra/typeorm/entities/Customer';
+import { Customer } from '@modules/customers/infra/typeorm/entities/Customer';
 
-import AppError from '@shared/errors/AppError';
+import { AppError } from '@shared/errors/AppError';
 
 interface IRequest {
   customer_id: string;
 }
 
 @injectable()
-class ListCustomerService {
+export class ListCustomerService {
   constructor(
     @inject('CustomersRepository')
     private customersRepository: ICustomersRepository,
@@ -27,5 +27,3 @@ class ListCustomerService {
     return customer;
   }
 }
-
-export { ListCustomerService };

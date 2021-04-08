@@ -1,10 +1,10 @@
 import { Router } from 'express';
 import { celebrate, Joi, Segments } from 'celebrate';
 
-import ensureAuthenticated from '../middlewares/ensureAuthenticated';
-import ProfileController from '../controllers/ProfileController';
+import { ensureAuthenticated } from '../middlewares/ensureAuthenticated';
+import { ProfileController } from '../controllers/ProfileController';
 
-const profileRouter = Router();
+export const profileRouter = Router();
 const profileController = new ProfileController();
 
 profileRouter.use(ensureAuthenticated);
@@ -33,5 +33,3 @@ profileRouter.put(
 );
 
 profileRouter.get('/', profileController.index);
-
-export default profileRouter;

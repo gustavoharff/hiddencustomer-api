@@ -1,13 +1,14 @@
 import { Router } from 'express';
 import { celebrate, Segments, Joi } from 'celebrate';
 
-import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated';
+import { ensureAuthenticated } from '@modules/users/infra/http/middlewares/ensureAuthenticated';
 import { ensureClient } from '@modules/users/infra/http/middlewares/ensureClient';
 
-import CustomersController from '@modules/customers/infra/http/controllers/CustomersController';
-import UserCustomersController from '@modules/customers/infra/http/controllers/UserCustomersController';
+import { CustomersController } from '@modules/customers/infra/http/controllers/CustomersController';
+import { UserCustomersController } from '@modules/customers/infra/http/controllers/UserCustomersController';
 
-const customersRouter = Router();
+export const customersRouter = Router();
+
 const customersController = new CustomersController();
 const userCustomersController = new UserCustomersController();
 
@@ -25,16 +26,3 @@ customersRouter.post(
   }),
   customersController.create,
 );
-
-customersRouter.delete(
-  '/:id',
-  ensureClient,
-  celebrate({
-    [Segments.PARAMS]: {
-      id: Joi.string().uuid().required(),
-    },
-  }),
-  customersController.delete,
-);
-
-export default customersRouter;

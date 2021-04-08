@@ -8,11 +8,11 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-import Release from '@modules/releases/infra/typeorm/entities/Release';
-import Company from '@modules/companies/infra/typeorm/entities/Company';
+import { Release } from '@modules/releases/infra/typeorm/entities/Release';
+import { Company } from '@modules/companies/infra/typeorm/entities/Company';
 
 @Entity('release_dates')
-class ReleaseDate {
+export class ReleaseDate {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -45,5 +45,3 @@ class ReleaseDate {
   @UpdateDateColumn()
   updated_at: Date;
 }
-
-export { ReleaseDate };

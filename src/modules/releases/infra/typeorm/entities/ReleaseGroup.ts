@@ -2,16 +2,12 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  JoinColumn,
-  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
-import Release from '@modules/releases/infra/typeorm/entities/Release';
-
 @Entity('release_groups')
-class ReleaseGroup {
+export class ReleaseGroup {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -22,14 +18,10 @@ class ReleaseGroup {
   release_id: string;
 
   @Column()
-  type: 'whatsapp' | 'discord' | 'telegram';
+  company_id: string;
 
-  @ManyToOne(() => Release, {
-    onDelete: 'CASCADE',
-    onUpdate: 'CASCADE',
-  })
-  @JoinColumn({ name: 'release_id' })
-  release: Release;
+  @Column()
+  type: 'whatsapp' | 'discord' | 'telegram';
 
   @CreateDateColumn()
   created_at: Date;
@@ -37,5 +29,3 @@ class ReleaseGroup {
   @UpdateDateColumn()
   updated_at: Date;
 }
-
-export { ReleaseGroup };

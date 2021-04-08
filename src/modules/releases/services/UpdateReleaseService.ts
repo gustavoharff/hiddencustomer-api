@@ -1,80 +1,57 @@
 import { injectable, inject } from 'tsyringe';
 
-import IReleasesRepository from '@modules/releases/repositories/IReleasesRepository';
-import ICustomersRepository from '@modules/customers/repositories/ICustomersRepository';
+import { IReleasesRepository } from '@modules/releases/repositories/IReleasesRepository';
 
-import AppError from '@shared/errors/AppError';
+import { AppError } from '@shared/errors/AppError';
 
-import Release from '../infra/typeorm/entities/Release';
-import { IReleaseGroupsRepository } from '../repositories/IReleaseGroupsRepository';
-import { IReleaseDatesRepository } from '../repositories/IReleaseDatesRepository';
+import { Release } from '../infra/typeorm/entities/Release';
 
 interface IRequest {
   id: string;
-  name: string;
-  customer_id: string;
-  paid: boolean;
-}
-
-interface IReleaseWithCounters extends Release {
-  interval: Date[];
-  dates_counter: number;
-  groups_counter: number;
+  name?: string;
+  paid?: boolean;
+  annotations?: string;
+  customer_id?: string;
 }
 
 @injectable()
-class UpdateReleaseService {
+export class UpdateReleaseService {
   constructor(
     @inject('ReleasesRepository')
     private releasesRepository: IReleasesRepository,
-
-    @inject('CustomersRepository')
-    private customersRepository: ICustomersRepository,
-
-    @inject('ReleaseGroupsRepository')
-    private releaseGroupsRepository: IReleaseGroupsRepository,
-
-    @inject('ReleaseDatesRepository')
-    private releaseDatesRepository: IReleaseDatesRepository,
   ) {}
 
   public async execute({
     id,
     name,
     paid,
+    annotations,
     customer_id,
-  }: IRequest): Promise<IReleaseWithCounters> {
+  }: IRequest): Promise<Release> {
     const release = await this.releasesRepository.findById(id);
 
     if (!release) {
       throw new AppError('Release does not exist.');
     }
 
-    release.name = name;
-    release.paid = paid;
+    if (name !== undefined) {
+      release.name = name;
+    }
 
-    if (release.customer_id !== customer_id) {
+    if (paid !== undefined) {
+      release.paid = paid;
+    }
+
+    if (annotations !== undefined) {
+      release.annotations = annotations;
+    }
+
+    if (customer_id !== undefined) {
       release.customer_id = customer_id;
-      const customer = await this.customersRepository.findById(customer_id);
-
-      if (customer) {
-        release.customer = customer;
-      }
     }
 
     await this.releasesRepository.save(release);
 
-    const groups = await this.releaseGroupsRepository.findByRelease(release.id);
-
-    const dates = await this.releaseDatesRepository.findByRelease(release.id);
-
-    return {
-      ...release,
-      dates_counter: dates.length,
-      groups_counter: groups.length,
-      interval: [dates[dates.length - 1].date, dates[0].date],
-    };
+    return release;
   }
 }
-
-export { UpdateReleaseService };

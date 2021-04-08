@@ -7,7 +7,7 @@ import {
 } from 'typeorm';
 
 @Entity('companies')
-class Company {
+export class Company {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -20,5 +20,3 @@ class Company {
   @UpdateDateColumn()
   updated_at: Date;
 }
-
-export default Company;

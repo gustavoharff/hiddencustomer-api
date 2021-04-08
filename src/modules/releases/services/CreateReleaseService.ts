@@ -1,10 +1,10 @@
 import { injectable, inject } from 'tsyringe';
 
-import IReleasesRepository from '@modules/releases/repositories/IReleasesRepository';
-import ICustomersRepository from '@modules/customers/repositories/ICustomersRepository';
+import { IReleasesRepository } from '@modules/releases/repositories/IReleasesRepository';
+import { ICustomersRepository } from '@modules/customers/repositories/ICustomersRepository';
 
-import Release from '@modules/releases/infra/typeorm/entities/Release';
-import AppError from '@shared/errors/AppError';
+import { Release } from '@modules/releases/infra/typeorm/entities/Release';
+import { AppError } from '@shared/errors/AppError';
 
 interface IRequest {
   name: string;
@@ -12,14 +12,8 @@ interface IRequest {
   company_id: string;
 }
 
-interface IReleaseWithCounters extends Release {
-  interval: Date[];
-  dates_counter: number;
-  groups_counter: number;
-}
-
 @injectable()
-class CreateReleaseService {
+export class CreateReleaseService {
   constructor(
     @inject('ReleasesRepository')
     private releasesRepository: IReleasesRepository,
@@ -32,7 +26,7 @@ class CreateReleaseService {
     name,
     customer_id,
     company_id,
-  }: IRequest): Promise<IReleaseWithCounters> {
+  }: IRequest): Promise<Release> {
     const customer = await this.customersRepository.findById(customer_id);
 
     if (!customer) {
@@ -45,8 +39,6 @@ class CreateReleaseService {
       company_id,
     });
 
-    return { ...release, dates_counter: 0, groups_counter: 0, interval: [] };
+    return release;
   }
 }
-
-export default CreateReleaseService;

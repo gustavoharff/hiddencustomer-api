@@ -5,7 +5,7 @@ import { IReleaseDatesRepository } from '@modules/releases/repositories/IRelease
 import { ReleaseDate } from '@modules/releases/infra/typeorm/entities/ReleaseDate';
 import { ICreateReleaseDateDTO } from '@modules/releases/dtos/ICreateReleaseDateDTO';
 
-class ReleaseDatesRepository implements IReleaseDatesRepository {
+export class ReleaseDatesRepository implements IReleaseDatesRepository {
   private ormRepository: Repository<ReleaseDate>;
 
   constructor() {
@@ -64,5 +64,3 @@ class ReleaseDatesRepository implements IReleaseDatesRepository {
     return releaseDates;
   }
 }
-
-export { ReleaseDatesRepository };

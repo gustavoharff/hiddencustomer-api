@@ -6,7 +6,7 @@ import { ReleaseGroup } from '@modules/releases/infra/typeorm/entities/ReleaseGr
 
 import { ICreateReleaseGroupDTO } from '@modules/releases/dtos/ICreateReleaseGroupDTO';
 
-class ReleaseGroupsRepository implements IReleaseGroupsRepository {
+export class ReleaseGroupsRepository implements IReleaseGroupsRepository {
   private ormRepository: Repository<ReleaseGroup>;
 
   constructor() {
@@ -17,11 +17,13 @@ class ReleaseGroupsRepository implements IReleaseGroupsRepository {
     name,
     type,
     release_id,
+    company_id,
   }: ICreateReleaseGroupDTO): Promise<ReleaseGroup> {
     const releaseGroup = this.ormRepository.create({
       name,
       type,
       release_id,
+      company_id,
     });
 
     await this.ormRepository.save(releaseGroup);
@@ -43,13 +45,11 @@ class ReleaseGroupsRepository implements IReleaseGroupsRepository {
     return releaseGroup;
   }
 
-  public async findByRelease(release_id: string): Promise<ReleaseGroup[]> {
+  public async findByCompany(company_id: string): Promise<ReleaseGroup[]> {
     const releaseGroups = await this.ormRepository.find({
-      where: { release_id },
+      where: { company_id },
     });
 
     return releaseGroups;
   }
 }
-
-export { ReleaseGroupsRepository };

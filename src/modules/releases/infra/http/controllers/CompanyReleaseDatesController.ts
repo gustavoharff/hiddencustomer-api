@@ -1,10 +1,9 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
-import { classToClass } from 'class-transformer';
 
 import { ListCompanyReleasesDatesService } from '@modules/releases/services/ListCompanyReleasesDatesService';
 
-class CompanyReleaseDatesController {
+export class CompanyReleaseDatesController {
   public async index(request: Request, response: Response): Promise<Response> {
     const { company_id } = request.user;
 
@@ -14,8 +13,6 @@ class CompanyReleaseDatesController {
       company_id,
     });
 
-    return response.json(classToClass(dates));
+    return response.json(dates);
   }
 }
-
-export { CompanyReleaseDatesController };

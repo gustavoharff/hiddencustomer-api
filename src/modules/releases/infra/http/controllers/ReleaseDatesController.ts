@@ -1,12 +1,11 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
-import { classToClass } from 'class-transformer';
 
 import { ListReleaseDatesService } from '@modules/releases/services/ListReleaseDatesService';
 import { CreateReleaseDateService } from '@modules/releases/services/CreateReleaseDateService';
 import { DeleteReleaseDateService } from '@modules/releases/services/DeleteReleaseDateService';
 
-class ReleaseDatesController {
+export class ReleaseDatesController {
   public async index(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
 
@@ -16,7 +15,7 @@ class ReleaseDatesController {
       release_id: id,
     });
 
-    return response.json(classToClass(dates));
+    return response.json(dates);
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
@@ -31,7 +30,7 @@ class ReleaseDatesController {
       company_id,
     });
 
-    return response.json(classToClass(releaseDate));
+    return response.json(releaseDate);
   }
 
   public async delete(request: Request, response: Response): Promise<Response> {
@@ -44,5 +43,3 @@ class ReleaseDatesController {
     return response.send();
   }
 }
-
-export { ReleaseDatesController };

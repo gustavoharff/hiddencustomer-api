@@ -1,8 +1,8 @@
-import Release from '@modules/releases/infra/typeorm/entities/Release';
+import { Release } from '@modules/releases/infra/typeorm/entities/Release';
 
-import ICreateReleaseDTO from '@modules/releases/dtos/ICreateReleaseDTO';
+import { ICreateReleaseDTO } from '@modules/releases/dtos/ICreateReleaseDTO';
 
-export default interface IReleasesRepository {
+export interface IReleasesRepository {
   create(data: ICreateReleaseDTO): Promise<Release>;
   save(release: Release): Promise<Release>;
   delete(id: string): Promise<void>;

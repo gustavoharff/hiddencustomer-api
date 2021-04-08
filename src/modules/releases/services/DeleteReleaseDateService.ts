@@ -2,14 +2,14 @@ import { injectable, inject } from 'tsyringe';
 
 import { IReleaseDatesRepository } from '@modules/releases/repositories/IReleaseDatesRepository';
 
-import AppError from '@shared/errors/AppError';
+import { AppError } from '@shared/errors/AppError';
 
 interface IRequest {
   id: string;
 }
 
 @injectable()
-class DeleteReleaseDateService {
+export class DeleteReleaseDateService {
   constructor(
     @inject('ReleaseDatesRepository')
     private releaseDatesRepository: IReleaseDatesRepository,
@@ -25,5 +25,3 @@ class DeleteReleaseDateService {
     await this.releaseDatesRepository.delete(id);
   }
 }
-
-export { DeleteReleaseDateService };

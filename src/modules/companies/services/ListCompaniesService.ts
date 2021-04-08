@@ -1,8 +1,8 @@
 import { injectable, inject } from 'tsyringe';
 
-import ICompaniesRepository from '@modules/companies/repositories/ICompaniesRepository';
+import { ICompaniesRepository } from '@modules/companies/repositories/ICompaniesRepository';
 
-import Company from '@modules/companies/infra/typeorm/entities/Company';
+import { Company } from '@modules/companies/infra/typeorm/entities/Company';
 
 @injectable()
 export class ListCompaniesService {

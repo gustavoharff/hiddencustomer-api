@@ -1,4 +1,4 @@
-export default interface IUpdateCompanyDTO {
+export interface IUpdateCompanyDTO {
   id: string;
   name: string;
 }

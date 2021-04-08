@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
 import { verify } from 'jsonwebtoken';
 
-import AppError from '@shared/errors/AppError';
+import { AppError } from '@shared/errors/AppError';
 
-import authConfig from '@config/auth';
+import { authConfig } from '@config/auth';
 
 interface ITokenPayload {
   iat: number;
@@ -19,7 +19,7 @@ interface ISubjectParsed {
   };
 }
 
-export default function ensureAuthenticated(
+export function ensureAuthenticated(
   request: Request,
   response: Response,
   next: NextFunction,

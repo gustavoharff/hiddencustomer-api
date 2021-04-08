@@ -2,7 +2,7 @@ import { ReleaseDate } from '@modules/releases/infra/typeorm/entities/ReleaseDat
 
 import { ICreateReleaseDateDTO } from '@modules/releases/dtos/ICreateReleaseDateDTO';
 
-interface IReleaseDatesRepository {
+export interface IReleaseDatesRepository {
   create(data: ICreateReleaseDateDTO): Promise<ReleaseDate>;
   save(releaseDate: ReleaseDate): Promise<ReleaseDate>;
   delete(id: string): Promise<void>;
@@ -10,5 +10,3 @@ interface IReleaseDatesRepository {
   findByRelease(release_id: string): Promise<ReleaseDate[]>;
   findByCompany(company_id: string): Promise<ReleaseDate[]>;
 }
-
-export { IReleaseDatesRepository };

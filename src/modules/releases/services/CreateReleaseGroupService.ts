@@ -1,21 +1,22 @@
 import { injectable, inject } from 'tsyringe';
 
-import IReleasesRepository from '@modules/releases/repositories/IReleasesRepository';
+import { IReleasesRepository } from '@modules/releases/repositories/IReleasesRepository';
 
 import { IReleaseGroupsRepository } from '@modules/releases/repositories/IReleaseGroupsRepository';
 
-import AppError from '@shared/errors/AppError';
+import { AppError } from '@shared/errors/AppError';
 
 import { ReleaseGroup } from '../infra/typeorm/entities/ReleaseGroup';
 
-type IRequest = {
-  release_id: string;
+interface IRequest {
   name: string;
   type: 'whatsapp' | 'discord' | 'telegram';
-};
+  release_id: string;
+  company_id: string;
+}
 
 @injectable()
-class CreateReleaseGroupService {
+export class CreateReleaseGroupService {
   constructor(
     @inject('ReleasesRepository')
     private releasesRepository: IReleasesRepository,
@@ -26,6 +27,7 @@ class CreateReleaseGroupService {
 
   public async execute({
     release_id,
+    company_id,
     name,
     type,
   }: IRequest): Promise<ReleaseGroup> {
@@ -39,10 +41,9 @@ class CreateReleaseGroupService {
       name,
       type,
       release_id,
+      company_id,
     });
 
     return releaseGroup;
   }
 }
-
-export { CreateReleaseGroupService };

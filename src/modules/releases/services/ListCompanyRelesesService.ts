@@ -1,32 +1,18 @@
 import { injectable, inject } from 'tsyringe';
 
-import IReleasesRepository from '@modules/releases/repositories/IReleasesRepository';
-import ICompaniesRepository from '@modules/companies/repositories/ICompaniesRepository';
+import { IReleasesRepository } from '@modules/releases/repositories/IReleasesRepository';
+import { ICompaniesRepository } from '@modules/companies/repositories/ICompaniesRepository';
 
-import Release from '@modules/releases/infra/typeorm/entities/Release';
-import AppError from '@shared/errors/AppError';
-import { IReleaseDatesRepository } from '../repositories/IReleaseDatesRepository';
-import { IReleaseGroupsRepository } from '../repositories/IReleaseGroupsRepository';
+import { Release } from '@modules/releases/infra/typeorm/entities/Release';
+import { AppError } from '@shared/errors/AppError';
 
 interface IRequest {
   company_id: string;
 }
 
-interface IReleaseWithCounters extends Release {
-  interval: Date[];
-  dates_counter: number;
-  groups_counter: number;
-}
-
 @injectable()
-class ListCompanyReleasesService {
+export class ListCompanyReleasesService {
   constructor(
-    @inject('ReleaseGroupsRepository')
-    private releaseGroupsRepository: IReleaseGroupsRepository,
-
-    @inject('ReleaseDatesRepository')
-    private releaseDatesRepository: IReleaseDatesRepository,
-
     @inject('ReleasesRepository')
     private releasesRepository: IReleasesRepository,
 
@@ -34,9 +20,7 @@ class ListCompanyReleasesService {
     private companiesRepository: ICompaniesRepository,
   ) {}
 
-  public async execute({
-    company_id,
-  }: IRequest): Promise<IReleaseWithCounters[]> {
+  public async execute({ company_id }: IRequest): Promise<Release[]> {
     const company = await this.companiesRepository.findById(company_id);
 
     if (!company) {
@@ -45,36 +29,6 @@ class ListCompanyReleasesService {
 
     const releases = await this.releasesRepository.findByCompany(company_id);
 
-    const releasesWithDates = await Promise.all(
-      releases.map(async release => {
-        const dates = await this.releaseDatesRepository.findByRelease(
-          release.id,
-        );
-
-        const groups = await this.releaseGroupsRepository.findByRelease(
-          release.id,
-        );
-
-        if (dates.length <= 0) {
-          return {
-            ...release,
-            interval: [],
-            dates_counter: dates.length,
-            groups_counter: groups.length,
-          };
-        }
-
-        return {
-          ...release,
-          interval: [dates[dates.length - 1].date, dates[0].date],
-          dates_counter: dates.length,
-          groups_counter: groups.length,
-        };
-      }),
-    );
-
-    return releasesWithDates;
+    return releases;
   }
 }
-
-export { ListCompanyReleasesService };

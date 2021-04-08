@@ -1,12 +1,12 @@
 import { Router } from 'express';
 import { celebrate, Segments, Joi } from 'celebrate';
 
-import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated';
+import { ensureAuthenticated } from '@modules/users/infra/http/middlewares/ensureAuthenticated';
 
 import { ReleaseDatesController } from '@modules/releases/infra/http/controllers/ReleaseDatesController';
 import { CompanyReleaseDatesController } from '@modules/releases/infra/http/controllers/CompanyReleaseDatesController';
 
-const datesRouter = Router();
+export const datesRouter = Router();
 const releaseDatesController = new ReleaseDatesController();
 const companyReleaseDatesController = new CompanyReleaseDatesController();
 
@@ -44,5 +44,3 @@ datesRouter.delete(
   }),
   releaseDatesController.delete,
 );
-
-export { datesRouter };
