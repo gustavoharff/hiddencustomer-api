@@ -1,10 +1,12 @@
 import { injectable, inject } from 'tsyringe';
 
-import AppError from '../../../shared/errors/AppError';
+import { AppError } from '@shared/errors/AppError';
 
-import User from '../infra/typeorm/entities/User';
-import IUsersRepository from '../repositories/IUsersRepository';
-import IHashProvider from '../providers/HashProvider/models/IHashProvider';
+import { User } from '@modules/users/infra/typeorm/entities/User';
+
+import { IUsersRepository } from '../repositories/IUsersRepository';
+
+import { IHashProvider } from '../providers/HashProvider/models/IHashProvider';
 
 interface IRequest {
   user_id: string;
@@ -13,7 +15,7 @@ interface IRequest {
 }
 
 @injectable()
-class UpdateUserPasswordService {
+export class UpdateUserPasswordService {
   constructor(
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
@@ -57,5 +59,3 @@ class UpdateUserPasswordService {
     return user;
   }
 }
-
-export { UpdateUserPasswordService };

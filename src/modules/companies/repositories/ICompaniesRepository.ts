@@ -1,6 +1,6 @@
-import Company from '@modules/companies/infra/typeorm/entities/Company';
+import { Company } from '@modules/companies/infra/typeorm/entities/Company';
 
-export default interface ICompaniesRepository {
+export interface ICompaniesRepository {
   create(name: string): Promise<Company>;
   findById(id: string): Promise<Company | undefined>;
   findAll(): Promise<Company[]>;

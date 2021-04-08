@@ -1,22 +1,18 @@
 import { injectable, inject } from 'tsyringe';
 
-import ICompaniesRepository from '@modules/companies/repositories/ICompaniesRepository';
-import ICustomersRepository from '@modules/customers/repositories/ICustomersRepository';
+import { ICompaniesRepository } from '@modules/companies/repositories/ICompaniesRepository';
+import { ICustomersRepository } from '@modules/customers/repositories/ICustomersRepository';
 
-import Customer from '@modules/customers/infra/typeorm/entities/Customer';
-import AppError from '@shared/errors/AppError';
+import { Customer } from '@modules/customers/infra/typeorm/entities/Customer';
+import { AppError } from '@shared/errors/AppError';
 
 interface IRequest {
   name: string;
   company_id: string;
 }
 
-interface ICustomerWithCounter extends Customer {
-  releases_counter: number;
-}
-
 @injectable()
-class CreateCustomerService {
+export class CreateCustomerService {
   constructor(
     @inject('CompaniesRepository')
     private companiesRepository: ICompaniesRepository,
@@ -25,10 +21,7 @@ class CreateCustomerService {
     private customersRepository: ICustomersRepository,
   ) {}
 
-  public async execute({
-    name,
-    company_id,
-  }: IRequest): Promise<ICustomerWithCounter> {
+  public async execute({ name, company_id }: IRequest): Promise<Customer> {
     const company = await this.companiesRepository.findById(company_id);
 
     if (!company) {
@@ -40,8 +33,6 @@ class CreateCustomerService {
       company_id,
     });
 
-    return { ...customer, releases_counter: 0 };
+    return customer;
   }
 }
-
-export default CreateCustomerService;

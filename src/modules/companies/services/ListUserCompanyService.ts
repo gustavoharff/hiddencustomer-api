@@ -1,16 +1,16 @@
 import { injectable, inject } from 'tsyringe';
 
-import ICompaniesRepository from '@modules/companies/repositories/ICompaniesRepository';
+import { ICompaniesRepository } from '@modules/companies/repositories/ICompaniesRepository';
 
-import Company from '@modules/companies/infra/typeorm/entities/Company';
-import AppError from '@shared/errors/AppError';
+import { Company } from '@modules/companies/infra/typeorm/entities/Company';
+import { AppError } from '@shared/errors/AppError';
 
 interface IRequest {
   company_id: string;
 }
 
 @injectable()
-class ListUserCompanyService {
+export class ListUserCompanyService {
   constructor(
     @inject('CompaniesRepository')
     private companiesRepository: ICompaniesRepository,
@@ -26,5 +26,3 @@ class ListUserCompanyService {
     return company;
   }
 }
-
-export default ListUserCompanyService;

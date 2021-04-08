@@ -1,11 +1,12 @@
 import { Router } from 'express';
 import { celebrate, Segments, Joi } from 'celebrate';
 
-import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated';
+import { ensureAuthenticated } from '@modules/users/infra/http/middlewares/ensureAuthenticated';
 
 import { ReleaseController } from '@modules/releases/infra/http/controllers/ReleaseController';
 
-const releaseRouter = Router();
+export const releaseRouter = Router();
+
 const releaseController = new ReleaseController();
 
 releaseRouter.use(ensureAuthenticated);
@@ -30,4 +31,12 @@ releaseRouter.put(
   releaseController.update,
 );
 
-export { releaseRouter };
+releaseRouter.delete(
+  '/:id',
+  celebrate({
+    [Segments.PARAMS]: {
+      id: Joi.string().uuid().required(),
+    },
+  }),
+  releaseController.delete,
+);

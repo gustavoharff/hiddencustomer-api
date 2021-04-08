@@ -1,10 +1,9 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
-import { classToClass } from 'class-transformer';
 
-import ListUserCompanyService from '@modules/companies/services/ListUserCompanyService';
+import { ListUserCompanyService } from '@modules/companies/services/ListUserCompanyService';
 
-class CompaniesController {
+export class UserCompanyController {
   public async index(request: Request, response: Response): Promise<Response> {
     const { company_id } = request.user;
 
@@ -12,8 +11,6 @@ class CompaniesController {
 
     const company = await listUserCompany.execute({ company_id });
 
-    return response.json(classToClass(company));
+    return response.json(company);
   }
 }
-
-export default CompaniesController;

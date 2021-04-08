@@ -1,9 +1,9 @@
 import { Router } from 'express';
 import { celebrate, Joi, Segments } from 'celebrate';
 
-import AuthorizationsController from '../controllers/AuthorizationsController';
+import { AuthorizationsController } from '../controllers/AuthorizationsController';
 
-const authorizationRouter = Router();
+export const authorizationRouter = Router();
 const authorizationsController = new AuthorizationsController();
 
 authorizationRouter.post(
@@ -16,5 +16,3 @@ authorizationRouter.post(
   }),
   authorizationsController.create,
 );
-
-export default authorizationRouter;

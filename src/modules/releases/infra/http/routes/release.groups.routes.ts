@@ -1,26 +1,16 @@
 import { Router } from 'express';
 import { celebrate, Segments, Joi } from 'celebrate';
 
-import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated';
+import { ensureAuthenticated } from '@modules/users/infra/http/middlewares/ensureAuthenticated';
 
 import { ReleaseGroupsController } from '@modules/releases/infra/http/controllers/ReleaseGroupsController';
 
-const groupsRouter = Router();
+export const releaseGroupsRouter = Router();
 const releaseGroupsController = new ReleaseGroupsController();
 
-groupsRouter.use(ensureAuthenticated);
+releaseGroupsRouter.use(ensureAuthenticated);
 
-groupsRouter.get(
-  '/:id',
-  celebrate({
-    [Segments.PARAMS]: {
-      id: Joi.string().uuid().required(),
-    },
-  }),
-  releaseGroupsController.index,
-);
-
-groupsRouter.post(
+releaseGroupsRouter.post(
   '/',
   celebrate({
     [Segments.BODY]: {
@@ -32,7 +22,7 @@ groupsRouter.post(
   releaseGroupsController.create,
 );
 
-groupsRouter.delete(
+releaseGroupsRouter.delete(
   '/:id',
   celebrate({
     [Segments.PARAMS]: {
@@ -41,5 +31,3 @@ groupsRouter.delete(
   }),
   releaseGroupsController.delete,
 );
-
-export { groupsRouter };

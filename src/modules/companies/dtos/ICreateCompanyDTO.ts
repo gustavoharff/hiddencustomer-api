@@ -1,3 +1,3 @@
-export default interface ICreateCompanyDTO {
+export interface ICreateCompanyDTO {
   name: string;
 }

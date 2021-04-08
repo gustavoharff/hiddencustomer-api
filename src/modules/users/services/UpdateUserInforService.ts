@@ -1,9 +1,9 @@
 import { injectable, inject } from 'tsyringe';
 
-import AppError from '../../../shared/errors/AppError';
+import { AppError } from '@shared/errors/AppError';
 
-import User from '../infra/typeorm/entities/User';
-import IUsersRepository from '../repositories/IUsersRepository';
+import { User } from '../infra/typeorm/entities/User';
+import { IUsersRepository } from '../repositories/IUsersRepository';
 
 interface IRequest {
   user_id: string;
@@ -12,7 +12,7 @@ interface IRequest {
 }
 
 @injectable()
-class UpdateUserInfoService {
+export class UpdateUserInfoService {
   constructor(
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
@@ -33,5 +33,3 @@ class UpdateUserInfoService {
     return user;
   }
 }
-
-export { UpdateUserInfoService };

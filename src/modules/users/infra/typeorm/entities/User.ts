@@ -9,10 +9,10 @@ import {
 } from 'typeorm';
 import { Exclude } from 'class-transformer';
 
-import Company from '@modules/companies/infra/typeorm/entities/Company';
+import { Company } from '@modules/companies/infra/typeorm/entities/Company';
 
 @Entity('users')
-class User {
+export class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -48,5 +48,3 @@ class User {
   @UpdateDateColumn()
   updated_at: Date;
 }
-
-export default User;

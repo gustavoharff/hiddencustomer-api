@@ -1,16 +1,16 @@
 import { injectable, inject } from 'tsyringe';
 
-import IReleasesRepository from '@modules/releases/repositories/IReleasesRepository';
+import { IReleasesRepository } from '@modules/releases/repositories/IReleasesRepository';
 
-import Release from '@modules/releases/infra/typeorm/entities/Release';
-import AppError from '@shared/errors/AppError';
+import { Release } from '@modules/releases/infra/typeorm/entities/Release';
+import { AppError } from '@shared/errors/AppError';
 
 interface IRequest {
   release_id: string;
 }
 
 @injectable()
-class ListReleaseService {
+export class ListReleaseService {
   constructor(
     @inject('ReleasesRepository')
     private releasesRepository: IReleasesRepository,
@@ -26,5 +26,3 @@ class ListReleaseService {
     return release;
   }
 }
-
-export { ListReleaseService };

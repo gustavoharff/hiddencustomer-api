@@ -1,11 +1,11 @@
 import { Router } from 'express';
 import { celebrate, Joi, Segments } from 'celebrate';
 
-import UsersController from '../controllers/UsersController';
-import ensureAuthenticated from '../middlewares/ensureAuthenticated';
-import ensureAdministrator from '../middlewares/ensureAdministrator';
+import { UsersController } from '../controllers/UsersController';
+import { ensureAuthenticated } from '../middlewares/ensureAuthenticated';
+import { ensureAdministrator } from '../middlewares/ensureAdministrator';
 
-const usersRouter = Router();
+export const usersRouter = Router();
 
 const usersController = new UsersController();
 
@@ -37,5 +37,3 @@ usersRouter.put(
   }),
   usersController.update,
 );
-
-export default usersRouter;

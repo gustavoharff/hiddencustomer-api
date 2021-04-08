@@ -2,11 +2,11 @@ import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 import { classToClass } from 'class-transformer';
 
-import CreateUserService from '@modules/users/services/CreateUserService';
+import { CreateUserService } from '@modules/users/services/CreateUserService';
 import { ChangeUserAccessService } from '@modules/users/services/ChangeUserAccessService';
 import { ListUsersService } from '@modules/users/services/ListUsersService';
 
-export default class UsersController {
+export class UsersController {
   public async index(request: Request, response: Response): Promise<Response> {
     const listUsers = container.resolve(ListUsersService);
 

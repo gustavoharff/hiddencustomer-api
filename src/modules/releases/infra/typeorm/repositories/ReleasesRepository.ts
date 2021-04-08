@@ -1,11 +1,11 @@
 import { getRepository, Repository } from 'typeorm';
 
-import IReleasesRepository from '@modules/releases/repositories/IReleasesRepository';
+import { IReleasesRepository } from '@modules/releases/repositories/IReleasesRepository';
 
-import Release from '@modules/releases/infra/typeorm/entities/Release';
-import ICreateReleaseDTO from '@modules/releases/dtos/ICreateReleaseDTO';
+import { Release } from '@modules/releases/infra/typeorm/entities/Release';
+import { ICreateReleaseDTO } from '@modules/releases/dtos/ICreateReleaseDTO';
 
-class ReleasesRepository implements IReleasesRepository {
+export class ReleasesRepository implements IReleasesRepository {
   private ormRepository: Repository<Release>;
 
   constructor() {
@@ -26,12 +26,6 @@ class ReleasesRepository implements IReleasesRepository {
 
     await this.ormRepository.save(release);
 
-    const releaseWithRelation = await this.findById(release.id);
-
-    if (releaseWithRelation) {
-      return releaseWithRelation;
-    }
-
     return release;
   }
 
@@ -44,9 +38,7 @@ class ReleasesRepository implements IReleasesRepository {
   }
 
   public async findById(id: string): Promise<Release | undefined> {
-    const release = await this.ormRepository.findOne(id, {
-      relations: ['customer'],
-    });
+    const release = await this.ormRepository.findOne(id);
 
     return release;
   }
@@ -64,11 +56,8 @@ class ReleasesRepository implements IReleasesRepository {
     const releases = await this.ormRepository.find({
       where: { company_id },
       order: { name: 'ASC' },
-      relations: ['customer'],
     });
 
     return releases;
   }
 }
-
-export default ReleasesRepository;

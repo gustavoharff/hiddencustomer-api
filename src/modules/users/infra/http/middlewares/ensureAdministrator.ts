@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 
-import AppError from '@shared/errors/AppError';
+import { AppError } from '@shared/errors/AppError';
 
-export default function ensureAdministrator(
+export function ensureAdministrator(
   request: Request,
   response: Response,
   next: NextFunction,

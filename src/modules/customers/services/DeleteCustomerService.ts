@@ -1,16 +1,16 @@
 import { injectable, inject } from 'tsyringe';
 
-import ICustomersRepository from '@modules/customers/repositories/ICustomersRepository';
+import { ICustomersRepository } from '@modules/customers/repositories/ICustomersRepository';
 
-import Customer from '@modules/customers/infra/typeorm/entities/Customer';
-import AppError from '@shared/errors/AppError';
+import { Customer } from '@modules/customers/infra/typeorm/entities/Customer';
+import { AppError } from '@shared/errors/AppError';
 
 interface IRequest {
   id: string;
 }
 
 @injectable()
-class DeleteCustomerService {
+export class DeleteCustomerService {
   constructor(
     @inject('CustomersRepository')
     private customersRepository: ICustomersRepository,
@@ -28,5 +28,3 @@ class DeleteCustomerService {
     return customer;
   }
 }
-
-export { DeleteCustomerService };

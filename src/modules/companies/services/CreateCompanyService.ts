@@ -1,15 +1,15 @@
 import { injectable, inject } from 'tsyringe';
 
-import ICompaniesRepository from '@modules/companies/repositories/ICompaniesRepository';
+import { ICompaniesRepository } from '@modules/companies/repositories/ICompaniesRepository';
 
-import Company from '@modules/companies/infra/typeorm/entities/Company';
+import { Company } from '@modules/companies/infra/typeorm/entities/Company';
 
 interface IRequest {
   name: string;
 }
 
 @injectable()
-class CreateCompanyService {
+export class CreateCompanyService {
   constructor(
     @inject('CompaniesRepository')
     private companiesRepository: ICompaniesRepository,
@@ -21,5 +21,3 @@ class CreateCompanyService {
     return company;
   }
 }
-
-export default CreateCompanyService;

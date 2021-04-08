@@ -1,10 +1,10 @@
 import { getRepository, Repository } from 'typeorm';
 
-import ICompaniesRepository from '@modules/companies/repositories/ICompaniesRepository';
+import { ICompaniesRepository } from '@modules/companies/repositories/ICompaniesRepository';
 
-import Company from '@modules/companies/infra/typeorm/entities/Company';
+import { Company } from '@modules/companies/infra/typeorm/entities/Company';
 
-class CompaniesRepository implements ICompaniesRepository {
+export class CompaniesRepository implements ICompaniesRepository {
   private ormRepository: Repository<Company>;
 
   constructor() {
@@ -37,5 +37,3 @@ class CompaniesRepository implements ICompaniesRepository {
     return this.ormRepository.save(company);
   }
 }
-
-export default CompaniesRepository;

@@ -9,7 +9,7 @@ interface IRequest {
 }
 
 @injectable()
-class ListCompanyReleasesDatesService {
+export class ListCompanyReleasesDatesService {
   constructor(
     @inject('ReleaseDatesRepository')
     private releaseDatesRepository: IReleaseDatesRepository,
@@ -21,5 +21,3 @@ class ListCompanyReleasesDatesService {
     return dates;
   }
 }
-
-export { ListCompanyReleasesDatesService };

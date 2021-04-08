@@ -1,11 +1,11 @@
 import { injectable, inject } from 'tsyringe';
 
-import IUsersRepository from '../repositories/IUsersRepository';
+import { IUsersRepository } from '../repositories/IUsersRepository';
 
-import User from '../infra/typeorm/entities/User';
+import { User } from '../infra/typeorm/entities/User';
 
 @injectable()
-class ListUsersService {
+export class ListUsersService {
   constructor(
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
@@ -17,5 +17,3 @@ class ListUsersService {
     return users;
   }
 }
-
-export { ListUsersService };

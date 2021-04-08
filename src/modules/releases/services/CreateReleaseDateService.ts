@@ -1,9 +1,9 @@
 import { injectable, inject } from 'tsyringe';
 
-import IReleasesRepository from '@modules/releases/repositories/IReleasesRepository';
+import { IReleasesRepository } from '@modules/releases/repositories/IReleasesRepository';
 import { IReleaseDatesRepository } from '@modules/releases/repositories/IReleaseDatesRepository';
 
-import AppError from '@shared/errors/AppError';
+import { AppError } from '@shared/errors/AppError';
 import { ReleaseDate } from '../infra/typeorm/entities/ReleaseDate';
 
 interface IRequest {
@@ -13,7 +13,7 @@ interface IRequest {
 }
 
 @injectable()
-class CreateReleaseDateService {
+export class CreateReleaseDateService {
   constructor(
     @inject('ReleasesRepository')
     private releasesRepository: IReleasesRepository,
@@ -42,5 +42,3 @@ class CreateReleaseDateService {
     return releaseDate;
   }
 }
-
-export { CreateReleaseDateService };
