@@ -1,6 +1,7 @@
 import { Router } from 'express';
 
 import { usersRouter } from '@modules/users/infra/http/routes/users.routes';
+import { passwordsRouter } from '@modules/users/infra/http/routes/password.routes';
 import { profileRouter } from '@modules/users/infra/http/routes/profile.routes';
 import { authorizationRouter } from '@modules/users/infra/http/routes/auth.routes';
 
@@ -16,6 +17,7 @@ import { releasesGroupsRouter } from '@modules/releases/infra/http/routes/releas
 export const routes = Router();
 
 routes.use('/users', usersRouter);
+routes.use('/me/password', passwordsRouter);
 routes.use('/me', profileRouter);
 routes.use('/auth', authorizationRouter);
 

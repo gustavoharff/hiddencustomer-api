@@ -4,6 +4,8 @@ import express, { Request, Response, NextFunction } from 'express';
 import { errors } from 'celebrate';
 import cors from 'cors';
 
+import 'dotenv/config';
+
 import 'express-async-errors';
 
 import { AppError } from '@shared/errors/AppError';
