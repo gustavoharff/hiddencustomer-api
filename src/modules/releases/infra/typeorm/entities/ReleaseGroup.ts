@@ -2,9 +2,12 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Release } from './Release';
 
 @Entity('release_groups')
 export class ReleaseGroup {
@@ -16,6 +19,13 @@ export class ReleaseGroup {
 
   @Column()
   release_id: string;
+
+  @ManyToOne(() => Release, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
+  @JoinColumn({ name: 'release_id' })
+  release: Release;
 
   @Column()
   company_id: string;

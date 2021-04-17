@@ -38,7 +38,9 @@ export class ReleasesRepository implements IReleasesRepository {
   }
 
   public async findById(id: string): Promise<Release | undefined> {
-    const release = await this.ormRepository.findOne(id);
+    const release = await this.ormRepository.findOne(id, {
+      relations: ['dates', 'groups', 'customer'],
+    });
 
     return release;
   }
@@ -55,6 +57,7 @@ export class ReleasesRepository implements IReleasesRepository {
   public async findByCompany(company_id: string): Promise<Release[]> {
     const releases = await this.ormRepository.find({
       where: { company_id },
+      relations: ['dates', 'groups', 'customer'],
       order: { name: 'ASC' },
     });
 

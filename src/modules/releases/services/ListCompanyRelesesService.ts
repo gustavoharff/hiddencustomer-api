@@ -29,6 +29,15 @@ export class ListCompanyReleasesService {
 
     const releases = await this.releasesRepository.findByCompany(company_id);
 
-    return releases;
+    return releases.map(release => ({
+      ...release,
+      dates: release.dates.sort((a, b) => {
+        if (a.date < b.date) {
+          return 1;
+        }
+
+        return -1;
+      }),
+    }));
   }
 }

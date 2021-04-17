@@ -4,12 +4,15 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
 import { Customer } from '@modules/customers/infra/typeorm/entities/Customer';
 import { Company } from '@modules/companies/infra/typeorm/entities/Company';
+import { ReleaseDate } from './ReleaseDate';
+import { ReleaseGroup } from './ReleaseGroup';
 
 @Entity('releases')
 export class Release {
@@ -24,6 +27,12 @@ export class Release {
 
   @Column()
   paid: boolean;
+
+  @OneToMany(() => ReleaseDate, date => date.release)
+  dates: ReleaseDate[];
+
+  @OneToMany(() => ReleaseGroup, group => group.release)
+  groups: ReleaseGroup[];
 
   @Column()
   customer_id: string;

@@ -30,15 +30,17 @@ export class CreateReleaseService {
     const customer = await this.customersRepository.findById(customer_id);
 
     if (!customer) {
-      throw new AppError('Customer  does not exist.');
+      throw new AppError('Customer does not exist.');
     }
 
-    const release = await this.releasesRepository.create({
+    const { id } = await this.releasesRepository.create({
       name,
       customer_id,
       company_id,
     });
 
-    return release;
+    const release = await this.releasesRepository.findById(id);
+
+    return release as Release;
   }
 }
