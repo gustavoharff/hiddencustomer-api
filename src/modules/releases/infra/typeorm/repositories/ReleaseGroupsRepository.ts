@@ -45,6 +45,15 @@ export class ReleaseGroupsRepository implements IReleaseGroupsRepository {
     return releaseGroup;
   }
 
+  public async findByRelease(release_id: string): Promise<ReleaseGroup[]> {
+    const releaseGroups = await this.ormRepository.find({
+      where: { release_id },
+      order: { name: 'ASC' },
+    });
+
+    return releaseGroups;
+  }
+
   public async findByCompany(company_id: string): Promise<ReleaseGroup[]> {
     const releaseGroups = await this.ormRepository.find({
       where: { company_id },

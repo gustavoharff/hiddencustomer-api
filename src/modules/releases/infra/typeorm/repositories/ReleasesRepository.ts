@@ -42,7 +42,20 @@ export class ReleasesRepository implements IReleasesRepository {
       relations: ['dates', 'groups', 'customer'],
     });
 
-    return release;
+    if (release) {
+      return {
+        ...release,
+        dates: release.dates.sort((a, b) => {
+          if (a.date < b.date) {
+            return 1;
+          }
+
+          return -1;
+        }),
+      };
+    }
+
+    return undefined;
   }
 
   public async findByCustomer(customer_id: string): Promise<Release[]> {
@@ -51,7 +64,16 @@ export class ReleasesRepository implements IReleasesRepository {
       order: { name: 'ASC' },
     });
 
-    return releases;
+    return releases.map(release => ({
+      ...release,
+      dates: release.dates.sort((a, b) => {
+        if (a.date < b.date) {
+          return 1;
+        }
+
+        return -1;
+      }),
+    }));
   }
 
   public async findByCompany(company_id: string): Promise<Release[]> {
@@ -61,6 +83,15 @@ export class ReleasesRepository implements IReleasesRepository {
       order: { name: 'ASC' },
     });
 
-    return releases;
+    return releases.map(release => ({
+      ...release,
+      dates: release.dates.sort((a, b) => {
+        if (a.date < b.date) {
+          return 1;
+        }
+
+        return -1;
+      }),
+    }));
   }
 }

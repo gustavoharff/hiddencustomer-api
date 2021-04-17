@@ -10,6 +10,16 @@ const releaseGroupsController = new ReleaseGroupsController();
 
 releaseGroupsRouter.use(ensureAuthenticated);
 
+releaseGroupsRouter.get(
+  '/:id',
+  celebrate({
+    [Segments.PARAMS]: {
+      id: Joi.string().uuid().required(),
+    },
+  }),
+  releaseGroupsController.index,
+);
+
 releaseGroupsRouter.post(
   '/',
   celebrate({
