@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 
 import { CreateReleaseGroupService } from '@modules/releases/services/CreateReleaseGroupService';
+import { UpdateReleaseGroupService } from '@modules/releases/services/UpdateReleaseGroupService';
 import { DeleteReleaseGroupService } from '@modules/releases/services/DeleteReleaseGroupService';
 import { ListReleaseGroupsService } from '@modules/releases/services/ListReleaseGroupsService';
 
@@ -29,6 +30,21 @@ export class ReleaseGroupsController {
       type,
       release_id,
       company_id,
+    });
+
+    return response.json(releaseGroup);
+  }
+
+  public async update(request: Request, response: Response): Promise<Response> {
+    const { name, type } = request.body;
+    const { id } = request.params;
+
+    const updateReleaseGroup = container.resolve(UpdateReleaseGroupService);
+
+    const releaseGroup = await updateReleaseGroup.execute({
+      id,
+      name,
+      type,
     });
 
     return response.json(releaseGroup);

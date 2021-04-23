@@ -20,6 +20,20 @@ releaseGroupsRouter.get(
   releaseGroupsController.index,
 );
 
+releaseGroupsRouter.put(
+  '/:id',
+  celebrate({
+    [Segments.PARAMS]: {
+      id: Joi.string().uuid().required(),
+    },
+    [Segments.BODY]: {
+      name: Joi.string().required(),
+      type: Joi.string().required(),
+    },
+  }),
+  releaseGroupsController.update,
+);
+
 releaseGroupsRouter.post(
   '/',
   celebrate({
