@@ -29,6 +29,7 @@ releaseGroupsRouter.put(
     [Segments.BODY]: {
       name: Joi.string().required(),
       type: Joi.string().required(),
+      release_date_id: Joi.string().uuid().empty(''),
     },
   }),
   releaseGroupsController.update,
@@ -39,6 +40,7 @@ releaseGroupsRouter.post(
   celebrate({
     [Segments.BODY]: {
       release_id: Joi.string().uuid().required(),
+      release_date_id: Joi.string().uuid().empty(''),
       name: Joi.string().required(),
       type: Joi.string().required(),
     },

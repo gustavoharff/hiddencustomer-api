@@ -18,10 +18,12 @@ export class ReleaseGroupsRepository implements IReleaseGroupsRepository {
     type,
     release_id,
     company_id,
+    release_date_id,
   }: ICreateReleaseGroupDTO): Promise<ReleaseGroup> {
     const releaseGroup = this.ormRepository.create({
       name,
       type,
+      release_date_id,
       release_id,
       company_id,
     });

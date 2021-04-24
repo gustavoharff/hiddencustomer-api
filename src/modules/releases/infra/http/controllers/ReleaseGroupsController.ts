@@ -20,7 +20,7 @@ export class ReleaseGroupsController {
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
-    const { name, type, release_id } = request.body;
+    const { name, type, release_id, release_date_id } = request.body;
     const { company_id } = request.user;
 
     const createReleaseGroup = container.resolve(CreateReleaseGroupService);
@@ -28,6 +28,7 @@ export class ReleaseGroupsController {
     const releaseGroup = await createReleaseGroup.execute({
       name,
       type,
+      release_date_id,
       release_id,
       company_id,
     });
@@ -36,7 +37,7 @@ export class ReleaseGroupsController {
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
-    const { name, type } = request.body;
+    const { name, type, release_date_id } = request.body;
     const { id } = request.params;
 
     const updateReleaseGroup = container.resolve(UpdateReleaseGroupService);
@@ -45,6 +46,7 @@ export class ReleaseGroupsController {
       id,
       name,
       type,
+      release_date_id,
     });
 
     return response.json(releaseGroup);

@@ -11,6 +11,7 @@ import { ReleaseGroup } from '../infra/typeorm/entities/ReleaseGroup';
 interface IRequest {
   name: string;
   type: 'whatsapp' | 'discord' | 'telegram';
+  release_date_id?: string;
   release_id: string;
   company_id: string;
 }
@@ -26,10 +27,11 @@ export class CreateReleaseGroupService {
   ) {}
 
   public async execute({
-    release_id,
-    company_id,
     name,
     type,
+    release_date_id,
+    release_id,
+    company_id,
   }: IRequest): Promise<ReleaseGroup> {
     const release = await this.releasesRepository.findById(release_id);
 
@@ -40,6 +42,7 @@ export class CreateReleaseGroupService {
     const releaseGroup = await this.releaseGroupsRepository.create({
       name,
       type,
+      release_date_id,
       release_id,
       company_id,
     });
