@@ -27,13 +27,4 @@ usersRouter.post(
   usersController.create,
 );
 
-usersRouter.put(
-  '/:id',
-  ensureAdministrator,
-  celebrate({
-    [Segments.BODY]: {
-      active: Joi.boolean().required(),
-    },
-  }),
-  usersController.update,
-);
+usersRouter.put('/:id', ensureAdministrator, usersController.update);

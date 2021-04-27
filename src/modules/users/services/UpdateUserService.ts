@@ -1,0 +1,52 @@
+import { injectable, inject } from 'tsyringe';
+
+import { AppError } from '@shared/errors/AppError';
+
+import { User } from '../infra/typeorm/entities/User';
+import { IUsersRepository } from '../repositories/IUsersRepository';
+import { IHashProvider } from '../providers/HashProvider/models/IHashProvider';
+
+interface IRequest {
+  user_id: string;
+  name: string;
+  email: string;
+  password?: string;
+  company_id: string;
+}
+
+@injectable()
+export class UpdateUserService {
+  constructor(
+    @inject('UsersRepository')
+    private usersRepository: IUsersRepository,
+
+    @inject('HashProvider')
+    private hashProvider: IHashProvider,
+  ) {}
+
+  public async execute({
+    user_id,
+    name,
+    email,
+    password,
+    company_id,
+  }: IRequest): Promise<User> {
+    const user = await this.usersRepository.findById(user_id);
+
+    if (!user) {
+      throw new AppError('User not found.');
+    }
+
+    user.name = name;
+    user.email = email;
+    user.company_id = company_id;
+
+    if (password) {
+      user.password = await this.hashProvider.generateHash(password);
+    }
+
+    await this.usersRepository.save(user);
+
+    return user;
+  }
+}
