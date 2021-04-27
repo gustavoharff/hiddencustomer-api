@@ -38,7 +38,7 @@ export class UsersController {
 
     const changeUserAccess = container.resolve(ChangeUserAccessService);
 
-    if (active) {
+    if (active !== undefined) {
       const user = await changeUserAccess.execute({
         active,
         user_id: id,
@@ -46,6 +46,7 @@ export class UsersController {
 
       return response.json(classToClass(user));
     }
+
     const updateUserService = container.resolve(UpdateUserService);
 
     const user = await updateUserService.execute({
