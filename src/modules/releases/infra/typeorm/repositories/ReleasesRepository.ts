@@ -61,6 +61,7 @@ export class ReleasesRepository implements IReleasesRepository {
   public async findByCustomer(customer_id: string): Promise<Release[]> {
     const releases = await this.ormRepository.find({
       where: { customer_id },
+      relations: ['dates'],
       order: { name: 'ASC' },
     });
 

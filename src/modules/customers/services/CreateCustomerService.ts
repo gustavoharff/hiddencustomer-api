@@ -33,6 +33,9 @@ export class CreateCustomerService {
       company_id,
     });
 
-    return customer;
+    return {
+      ...customer,
+      releases_counter: 0,
+    } as Customer;
   }
 }
