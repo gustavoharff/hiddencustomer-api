@@ -44,11 +44,11 @@ export class AuthenticateUserService {
     );
 
     if (!passwordMatched) {
-      throw new AppError('Incorrect email/password combination.', 401);
+      throw new AppError('Incorrect email/password combination.', 400);
     }
 
     if (!user.active) {
-      throw new AppError('User without permission to access the system.', 440);
+      throw new AppError('User without permission to access the system.', 401);
     }
 
     const { secret, expiresIn } = authConfig.jwt;
