@@ -9,4 +9,5 @@ export interface IReleaseGroupsRepository {
   findById(id: string): Promise<ReleaseGroup | undefined>;
   findByRelease(release_id: string): Promise<ReleaseGroup[]>;
   findByCompany(company_id: string): Promise<ReleaseGroup[]>;
+  findByDate(date_id: string): Promise<ReleaseGroup[]>;
 }

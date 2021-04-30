@@ -4,17 +4,13 @@ import { celebrate, Segments, Joi } from 'celebrate';
 import { ensureAuthenticated } from '@modules/users/infra/http/middlewares/ensureAuthenticated';
 
 import { ReleaseDatesController } from '@modules/releases/infra/http/controllers/ReleaseDatesController';
-import { CompanyReleaseDatesController } from '@modules/releases/infra/http/controllers/CompanyReleaseDatesController';
 
-export const datesRouter = Router();
+export const releaseDatesRouter = Router();
 const releaseDatesController = new ReleaseDatesController();
-const companyReleaseDatesController = new CompanyReleaseDatesController();
 
-datesRouter.use(ensureAuthenticated);
+releaseDatesRouter.use(ensureAuthenticated);
 
-datesRouter.get('/company', companyReleaseDatesController.index);
-
-datesRouter.get(
+releaseDatesRouter.get(
   '/:id',
   celebrate({
     [Segments.PARAMS]: {
@@ -24,7 +20,7 @@ datesRouter.get(
   releaseDatesController.index,
 );
 
-datesRouter.post(
+releaseDatesRouter.post(
   '/',
   celebrate({
     [Segments.BODY]: {
@@ -35,7 +31,7 @@ datesRouter.post(
   releaseDatesController.create,
 );
 
-datesRouter.delete(
+releaseDatesRouter.delete(
   '/:id',
   celebrate({
     [Segments.PARAMS]: {

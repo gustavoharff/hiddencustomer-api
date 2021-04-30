@@ -10,7 +10,9 @@ import { customersRouter } from '@modules/customers/infra/http/routes/customers.
 import { customerRouter } from '@modules/customers/infra/http/routes/customer.routes';
 import { releasesRouter } from '@modules/releases/infra/http/routes/releases.routes';
 import { releaseRouter } from '@modules/releases/infra/http/routes/release.routes';
-import { datesRouter } from '@modules/releases/infra/http/routes/dates.routes';
+import { releaseDatesRouter } from '@modules/releases/infra/http/routes/release.dates.routes';
+import { releasesDatesRouter } from '@modules/releases/infra/http/routes/releases.dates.routes';
+import { releaseDateGroupsRouter } from '@modules/releases/infra/http/routes/release.date.groups.routes';
 import { releaseGroupsRouter } from '@modules/releases/infra/http/routes/release.groups.routes';
 import { releasesGroupsRouter } from '@modules/releases/infra/http/routes/releases.groups.routes';
 
@@ -26,6 +28,8 @@ routes.use('/customer', customerRouter);
 routes.use('/customers', customersRouter);
 routes.use('/releases', releasesRouter);
 routes.use('/release', releaseRouter);
-routes.use('/release/dates', datesRouter);
+routes.use('/release/dates', releaseDatesRouter);
+routes.use('/releases/dates', releasesDatesRouter);
 routes.use('/release/groups', releaseGroupsRouter);
+routes.use('/release/date/groups', releaseDateGroupsRouter);
 routes.use('/releases/groups', releasesGroupsRouter);
