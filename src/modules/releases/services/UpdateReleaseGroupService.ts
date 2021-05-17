@@ -4,6 +4,7 @@ import { AppError } from '@shared/errors/AppError';
 
 import { IReleaseGroupsRepository } from '../repositories/IReleaseGroupsRepository';
 import { ReleaseGroup } from '../infra/typeorm/entities/ReleaseGroup';
+import { IReleaseDatesRepository } from '../repositories/IReleaseDatesRepository';
 
 interface IRequest {
   id: string;
@@ -17,6 +18,9 @@ export class UpdateReleaseGroupService {
   constructor(
     @inject('ReleaseGroupsRepository')
     private releaseGroupsRepository: IReleaseGroupsRepository,
+
+    @inject('ReleaseDatesRepository')
+    private releaseDatesRepository: IReleaseDatesRepository,
   ) {}
 
   public async execute({
@@ -31,13 +35,22 @@ export class UpdateReleaseGroupService {
       throw new AppError('Group does not exist.');
     }
 
+    if (release_date_id) {
+      const date = await this.releaseDatesRepository.findById(release_date_id);
+
+      if (!date) {
+        throw new AppError('Date does not exist.');
+      }
+
+      if (release_date_id !== undefined) {
+        group.release_date_id = release_date_id;
+        group.release_date = date;
+      }
+    }
+
     group.name = name;
 
     group.type = type;
-
-    if (release_date_id !== undefined) {
-      group.release_date_id = release_date_id;
-    }
 
     await this.releaseGroupsRepository.save(group);
 

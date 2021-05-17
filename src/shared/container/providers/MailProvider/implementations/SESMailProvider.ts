@@ -20,8 +20,8 @@ export class SESMailProvider implements IMailProvider {
         apiVersion: '2010-12-01',
         region: 'us-east-1',
         credentials: {
-          accessKeyId: 'AKIATMZNI6MHOC4EVTPO',
-          secretAccessKey: '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',
+          accessKeyId: 'AKIATMZNI6MHGC6OWLRZ',
+          secretAccessKey: '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',
         },
       }),
     });

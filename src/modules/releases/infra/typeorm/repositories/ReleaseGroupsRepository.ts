@@ -51,6 +51,7 @@ export class ReleaseGroupsRepository implements IReleaseGroupsRepository {
     const releaseGroups = await this.ormRepository.find({
       where: { release_id },
       order: { name: 'ASC' },
+      relations: ['release_date'],
     });
 
     return releaseGroups;
