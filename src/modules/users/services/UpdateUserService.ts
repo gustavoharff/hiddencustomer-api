@@ -12,6 +12,7 @@ interface IRequest {
   email: string;
   password?: string;
   company_id: string;
+  permission: 'client' | 'user' | 'admin';
 }
 
 @injectable()
@@ -30,6 +31,7 @@ export class UpdateUserService {
     email,
     password,
     company_id,
+    permission,
   }: IRequest): Promise<User> {
     const user = await this.usersRepository.findById(user_id);
 
@@ -43,6 +45,10 @@ export class UpdateUserService {
 
     if (password) {
       user.password = await this.hashProvider.generateHash(password);
+    }
+
+    if (permission !== undefined && permission !== user.permission) {
+      user.permission = permission;
     }
 
     await this.usersRepository.save(user);

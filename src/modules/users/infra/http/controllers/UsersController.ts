@@ -17,7 +17,7 @@ export class UsersController {
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
-    const { name, email, password, company_id } = request.body;
+    const { name, email, password, company_id, permission } = request.body;
 
     const createUser = container.resolve(CreateUserService);
 
@@ -26,6 +26,7 @@ export class UsersController {
       email,
       password,
       company_id,
+      permission,
     });
 
     return response.json(classToClass(user));
@@ -33,7 +34,7 @@ export class UsersController {
 
   public async update(request: Request, response: Response): Promise<Response> {
     const { active } = request.body;
-    const { name, email, password, company_id } = request.body;
+    const { name, email, password, company_id, permission } = request.body;
     const { id } = request.params;
 
     const changeUserAccess = container.resolve(ChangeUserAccessService);
@@ -55,6 +56,7 @@ export class UsersController {
       email,
       user_id: id,
       password,
+      permission,
     });
 
     return response.json(classToClass(user));

@@ -3,4 +3,5 @@ export interface ICreateUserDTO {
   email: string;
   password: string;
   company_id: string;
+  permission: 'user' | 'client' | 'admin';
 }

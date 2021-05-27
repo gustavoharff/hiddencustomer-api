@@ -17,12 +17,13 @@ export class UsersRepository implements IUsersRepository {
     email,
     password,
     company_id,
+    permission,
   }: ICreateUserDTO): Promise<User> {
     const user = this.ormRepository.create({
       name,
       email,
       password,
-      permission: 'user',
+      permission,
       active: true,
       company_id,
     });
@@ -37,7 +38,9 @@ export class UsersRepository implements IUsersRepository {
   }
 
   public async findById(id: string): Promise<User | undefined> {
-    const user = await this.ormRepository.findOne(id);
+    const user = await this.ormRepository.findOne(id, {
+      relations: ['company'],
+    });
 
     return user;
   }
