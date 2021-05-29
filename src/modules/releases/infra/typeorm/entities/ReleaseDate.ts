@@ -22,6 +22,9 @@ export class ReleaseDate {
   @Column()
   release_id: string;
 
+  @Column()
+  notification_id: string;
+
   @ManyToOne(() => Release, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',

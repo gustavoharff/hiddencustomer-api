@@ -1,9 +1,13 @@
 import { injectable, inject } from 'tsyringe';
+import moment from 'moment';
+import 'moment/locale/pt-br';
 
 import { IReleasesRepository } from '@modules/releases/repositories/IReleasesRepository';
 import { IReleaseDatesRepository } from '@modules/releases/repositories/IReleaseDatesRepository';
 
 import { AppError } from '@shared/errors/AppError';
+import { IUsersRepository } from '@modules/users/repositories/IUsersRepository';
+import INotificationProvider from '@shared/container/providers/NotificationProvider/models/INotificationProvider';
 import { ReleaseDate } from '../infra/typeorm/entities/ReleaseDate';
 
 interface IRequest {
@@ -20,6 +24,12 @@ export class CreateReleaseDateService {
 
     @inject('ReleaseDatesRepository')
     private releaseDatesRepository: IReleaseDatesRepository,
+
+    @inject('UsersRepository')
+    private usersRepository: IUsersRepository,
+
+    @inject('NotificationProvider')
+    private notificationProvider: INotificationProvider,
   ) {}
 
   public async execute({
@@ -38,6 +48,28 @@ export class CreateReleaseDateService {
       release_id,
       company_id,
     });
+
+    const users = await this.usersRepository.findByCompany(company_id);
+
+    let notificationId = null;
+
+    try {
+      notificationId = await this.notificationProvider.sendNotification({
+        to: users.map(user => user.email),
+        date: moment(releaseDate.date).subtract(1, 'day').format(),
+        heading: 'Lançamento se aproximando!',
+        body: `Você tem um lançamento ${release.name} em ${moment(
+          releaseDate.date,
+        ).format('LLL')}!`,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+
+    if (notificationId) {
+      releaseDate.notification_id = notificationId;
+      await this.releaseDatesRepository.save(releaseDate);
+    }
 
     return releaseDate;
   }

@@ -2,6 +2,7 @@ import { injectable, inject } from 'tsyringe';
 
 import { AppError } from '@shared/errors/AppError';
 
+import { ICompaniesRepository } from '@modules/companies/repositories/ICompaniesRepository';
 import { User } from '../infra/typeorm/entities/User';
 import { IUsersRepository } from '../repositories/IUsersRepository';
 import { IHashProvider } from '../providers/HashProvider/models/IHashProvider';
@@ -23,6 +24,9 @@ export class UpdateUserService {
 
     @inject('HashProvider')
     private hashProvider: IHashProvider,
+
+    @inject('CompaniesRepository')
+    private companiesRepository: ICompaniesRepository,
   ) {}
 
   public async execute({
@@ -39,9 +43,15 @@ export class UpdateUserService {
       throw new AppError('User not found.');
     }
 
+    const company = await this.companiesRepository.findById(company_id);
+
+    if (!company) {
+      throw new AppError('Company not found.');
+    }
+
     user.name = name;
     user.email = email;
-    user.company_id = company_id;
+    user.company = company;
 
     if (password) {
       user.password = await this.hashProvider.generateHash(password);

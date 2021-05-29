@@ -56,4 +56,10 @@ export class UsersRepository implements IUsersRepository {
 
     return users;
   }
+
+  public async findByCompany(company_id: string): Promise<User[]> {
+    const users = await this.ormRepository.find({ where: { company_id } });
+
+    return users;
+  }
 }
