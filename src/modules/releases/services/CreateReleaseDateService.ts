@@ -60,7 +60,9 @@ export class CreateReleaseDateService {
         heading: 'Lançamento se aproximando!',
         body: `Você tem um lançamento ${release.name} em ${moment(
           releaseDate.date,
-        ).format('LLL')}!`,
+        )
+          .utc(true)
+          .format('LLL')}!`,
       });
     } catch (err) {
       console.log(err);
