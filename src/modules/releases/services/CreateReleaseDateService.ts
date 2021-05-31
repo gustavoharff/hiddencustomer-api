@@ -62,7 +62,7 @@ export class CreateReleaseDateService {
           releaseDate.date,
         )
           .tz('America/Sao_Paulo')
-          .format()}!`,
+          .format('LLL')}!`,
       });
     } catch (err) {
       console.log(err);
