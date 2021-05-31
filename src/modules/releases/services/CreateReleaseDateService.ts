@@ -1,5 +1,5 @@
 import { injectable, inject } from 'tsyringe';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import 'moment/locale/pt-br';
 
 import { IReleasesRepository } from '@modules/releases/repositories/IReleasesRepository';
@@ -53,8 +53,6 @@ export class CreateReleaseDateService {
 
     let notificationId = null;
 
-    console.log(moment(releaseDate.date).format());
-
     try {
       notificationId = await this.notificationProvider.sendNotification({
         to: users.map(user => user.email),
@@ -63,8 +61,8 @@ export class CreateReleaseDateService {
         body: `Você tem um lançamento ${release.name} em ${moment(
           releaseDate.date,
         )
-          .utc(true)
-          .format('LLL')}!`,
+          .tz('America/Sao_Paulo')
+          .format()}!`,
       });
     } catch (err) {
       console.log(err);
