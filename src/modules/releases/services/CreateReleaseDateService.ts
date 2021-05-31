@@ -53,6 +53,16 @@ export class CreateReleaseDateService {
 
     let notificationId = null;
 
+    console.log(
+      'KeepLocalTime: true',
+      moment(releaseDate.date).utc(true).format('LLL'),
+    );
+
+    console.log(
+      'KeepLocalTime: false',
+      moment(releaseDate.date).utc(false).format('LLL'),
+    );
+
     try {
       notificationId = await this.notificationProvider.sendNotification({
         to: users.map(user => user.email),
