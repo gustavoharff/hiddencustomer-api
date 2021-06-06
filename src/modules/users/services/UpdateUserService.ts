@@ -14,6 +14,7 @@ interface IRequest {
   password?: string;
   company_id: string;
   permission: 'client' | 'user' | 'admin';
+  active: boolean;
 }
 
 @injectable()
@@ -36,6 +37,7 @@ export class UpdateUserService {
     password,
     company_id,
     permission,
+    active,
   }: IRequest): Promise<User> {
     const user = await this.usersRepository.findById(user_id);
 
@@ -52,6 +54,7 @@ export class UpdateUserService {
     user.name = name;
     user.email = email;
     user.company = company;
+    user.active = active;
 
     if (password) {
       user.password = await this.hashProvider.generateHash(password);

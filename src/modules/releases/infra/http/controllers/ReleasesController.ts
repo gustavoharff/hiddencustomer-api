@@ -18,13 +18,14 @@ export class ReleasesController {
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
-    const { name, customer_id } = request.body;
+    const { name, paid, customer_id } = request.body;
     const { company_id } = request.user;
 
     const createRelease = container.resolve(CreateReleaseService);
 
     const release = await createRelease.execute({
       name,
+      paid,
       customer_id,
       company_id,
     });

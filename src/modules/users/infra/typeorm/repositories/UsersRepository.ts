@@ -18,13 +18,14 @@ export class UsersRepository implements IUsersRepository {
     password,
     company_id,
     permission,
+    active,
   }: ICreateUserDTO): Promise<User> {
     const user = this.ormRepository.create({
       name,
       email,
       password,
       permission,
-      active: true,
+      active,
       company_id,
     });
 

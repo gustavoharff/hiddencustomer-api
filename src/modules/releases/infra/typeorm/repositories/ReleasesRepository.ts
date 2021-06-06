@@ -14,12 +14,13 @@ export class ReleasesRepository implements IReleasesRepository {
 
   public async create({
     name,
+    paid,
     customer_id,
     company_id,
   }: ICreateReleaseDTO): Promise<Release> {
     const release = this.ormRepository.create({
       name,
-      paid: false,
+      paid,
       customer_id,
       company_id,
     });

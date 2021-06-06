@@ -3,7 +3,6 @@ import { container } from 'tsyringe';
 import { classToClass } from 'class-transformer';
 
 import { CreateUserService } from '@modules/users/services/CreateUserService';
-import { ChangeUserAccessService } from '@modules/users/services/ChangeUserAccessService';
 import { UpdateUserService } from '@modules/users/services/UpdateUserService';
 import { ListUsersService } from '@modules/users/services/ListUsersService';
 
@@ -17,7 +16,14 @@ export class UsersController {
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
-    const { name, email, password, company_id, permission } = request.body;
+    const {
+      name,
+      email,
+      password,
+      company_id,
+      permission,
+      active,
+    } = request.body;
 
     const createUser = container.resolve(CreateUserService);
 
@@ -27,6 +33,7 @@ export class UsersController {
       password,
       company_id,
       permission,
+      active,
     });
 
     return response.json(classToClass(user));
@@ -37,17 +44,6 @@ export class UsersController {
     const { name, email, password, company_id, permission } = request.body;
     const { id } = request.params;
 
-    const changeUserAccess = container.resolve(ChangeUserAccessService);
-
-    if (active !== undefined) {
-      const user = await changeUserAccess.execute({
-        active,
-        user_id: id,
-      });
-
-      return response.json(classToClass(user));
-    }
-
     const updateUserService = container.resolve(UpdateUserService);
 
     const user = await updateUserService.execute({
@@ -57,6 +53,7 @@ export class UsersController {
       user_id: id,
       password,
       permission,
+      active,
     });
 
     return response.json(classToClass(user));

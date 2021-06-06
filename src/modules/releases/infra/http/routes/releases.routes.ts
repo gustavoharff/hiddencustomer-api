@@ -17,6 +17,7 @@ releasesRouter.post(
   celebrate({
     [Segments.BODY]: {
       name: Joi.string().required(),
+      paid: Joi.boolean().required(),
       customer_id: Joi.string().uuid().required(),
     },
   }),

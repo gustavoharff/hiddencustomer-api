@@ -8,6 +8,7 @@ import { AppError } from '@shared/errors/AppError';
 
 interface IRequest {
   name: string;
+  paid: boolean;
   customer_id: string;
   company_id: string;
 }
@@ -24,6 +25,7 @@ export class CreateReleaseService {
 
   public async execute({
     name,
+    paid,
     customer_id,
     company_id,
   }: IRequest): Promise<Release> {
@@ -35,6 +37,7 @@ export class CreateReleaseService {
 
     const { id } = await this.releasesRepository.create({
       name,
+      paid,
       customer_id,
       company_id,
     });

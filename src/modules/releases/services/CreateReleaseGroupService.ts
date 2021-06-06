@@ -39,7 +39,7 @@ export class CreateReleaseGroupService {
       throw new AppError('Release does not exist.');
     }
 
-    const releaseGroup = await this.releaseGroupsRepository.create({
+    const { id } = await this.releaseGroupsRepository.create({
       name,
       type,
       release_date_id,
@@ -47,6 +47,8 @@ export class CreateReleaseGroupService {
       company_id,
     });
 
-    return releaseGroup;
+    const releaseGroup = await this.releaseGroupsRepository.findById(id);
+
+    return releaseGroup as ReleaseGroup;
   }
 }

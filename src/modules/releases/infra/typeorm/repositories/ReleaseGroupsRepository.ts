@@ -42,7 +42,9 @@ export class ReleaseGroupsRepository implements IReleaseGroupsRepository {
   }
 
   public async findById(id: string): Promise<ReleaseGroup | undefined> {
-    const releaseGroup = await this.ormRepository.findOne(id);
+    const releaseGroup = await this.ormRepository.findOne(id, {
+      relations: ['release_date'],
+    });
 
     return releaseGroup;
   }

@@ -22,6 +22,7 @@ usersRouter.post(
       email: Joi.string().email().required(),
       password: Joi.string().required(),
       company_id: Joi.string().required(),
+      active: Joi.boolean().required(),
     },
   }),
   usersController.create,

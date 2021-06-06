@@ -13,6 +13,7 @@ interface IRequest {
   password: string;
   company_id: string;
   permission: 'user' | 'client' | 'admin';
+  active: boolean;
 }
 
 @injectable()
@@ -31,6 +32,7 @@ export class CreateUserService {
     password,
     company_id,
     permission,
+    active,
   }: IRequest): Promise<User> {
     const checkUserExists = await this.usersRepository.findByEmail(email);
 
@@ -46,6 +48,7 @@ export class CreateUserService {
       password: hashedPassword,
       company_id,
       permission,
+      active,
     });
 
     return user;
