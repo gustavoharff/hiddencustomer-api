@@ -5,6 +5,8 @@ import { passwordsRouter } from '@modules/users/infra/http/routes/password.route
 import { profileRouter } from '@modules/users/infra/http/routes/profile.routes';
 import { authorizationRouter } from '@modules/users/infra/http/routes/auth.routes';
 
+import { phoneNumbersRouter } from '@modules/numbers/infra/http/routes/phone.numbers.routes';
+
 import { companiesRouter } from '@modules/companies/infra/http/routes/companies.routes';
 import { customersRouter } from '@modules/customers/infra/http/routes/customers.routes';
 import { customerRouter } from '@modules/customers/infra/http/routes/customer.routes';
@@ -22,6 +24,8 @@ routes.use('/users', usersRouter);
 routes.use('/me/password', passwordsRouter);
 routes.use('/me', profileRouter);
 routes.use('/auth', authorizationRouter);
+
+routes.use('/numbers', phoneNumbersRouter);
 
 routes.use('/companies', companiesRouter);
 routes.use('/customer', customerRouter);

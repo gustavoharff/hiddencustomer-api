@@ -13,6 +13,9 @@ import { UsersRepository } from '@modules/users/infra/typeorm/repositories/Users
 import { IUserTokensRepository } from '@modules/users/repositories/IUserTokensRepository';
 import { UserTokensRepository } from '@modules/users/infra/typeorm/repositories/UserTokensRepository';
 
+import { IPhoneNumbersRepository } from '@modules/numbers/repositories/IPhoneNumbersRepository';
+import { PhoneNumbersRepository } from '@modules/numbers/infra/typeorm/repositories/PhoneNumbersRepository';
+
 import { ICustomersRepository } from '@modules/customers/repositories/ICustomersRepository';
 import { CustomersRepository } from '@modules/customers/infra/typeorm/repositories/CustomersRepository';
 
@@ -33,6 +36,11 @@ container.registerSingleton<ICompaniesRepository>(
 container.registerSingleton<IUsersRepository>(
   'UsersRepository',
   UsersRepository,
+);
+
+container.registerSingleton<IPhoneNumbersRepository>(
+  'PhoneNumbersRepository',
+  PhoneNumbersRepository,
 );
 
 container.registerSingleton<IUserTokensRepository>(
