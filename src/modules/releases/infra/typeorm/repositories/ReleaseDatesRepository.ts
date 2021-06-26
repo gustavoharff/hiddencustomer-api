@@ -56,6 +56,7 @@ export class ReleaseDatesRepository implements IReleaseDatesRepository {
   public async findByCompany(company_id: string): Promise<ReleaseDate[]> {
     const releaseDates = await this.ormRepository.find({
       where: { company_id },
+      relations: ['release'],
       order: {
         date: 'DESC',
       },
