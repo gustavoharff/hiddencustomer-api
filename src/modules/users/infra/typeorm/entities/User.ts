@@ -33,6 +33,9 @@ export class User {
   active: boolean;
 
   @Column()
+  avatar_url: string;
+
+  @Column()
   company_id: string;
 
   @ManyToOne(() => Company, {
