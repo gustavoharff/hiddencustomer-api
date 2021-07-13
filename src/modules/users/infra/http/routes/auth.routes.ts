@@ -16,3 +16,13 @@ authorizationRouter.post(
   }),
   authorizationsController.create,
 );
+
+authorizationRouter.post(
+  '/oauth',
+  celebrate({
+    [Segments.BODY]: {
+      googleToken: Joi.string().required(),
+    },
+  }),
+  authorizationsController.google,
+);
